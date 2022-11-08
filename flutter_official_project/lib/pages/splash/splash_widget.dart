@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_official_project/constant/constant.dart';
+import 'package:flutter_official_project/pages/splash/container_page.dart';
 import 'package:flutter_official_project/util/screen_utils.dart';
 
 class SplashWidget extends StatefulWidget {
@@ -14,6 +14,7 @@ class SplashWidget extends StatefulWidget {
 }
 
 class _SplashWidgetState extends State<SplashWidget> {
+  var container = const ContainerPage();
   bool showAd = true;
 
   @override
@@ -22,12 +23,10 @@ class _SplashWidgetState extends State<SplashWidget> {
 
     return Stack(
       children: <Widget>[
+        // 使用两个 Offstage，一个用于显示 App 的内容，一个是用于显示 5 秒倒计时的启动屏广告
         Offstage(
           offstage: showAd,
-          child: const Text(
-            'TEMPTEMPTEMPTEMPTEMPTEMP',
-            style: TextStyle(color: Colors.white, backgroundColor: Colors.red),
-          ),
+          child: container,
         ),
         Offstage(
           offstage: !showAd,
@@ -41,13 +40,14 @@ class _SplashWidgetState extends State<SplashWidget> {
                   alignment: const Alignment(0.0, 0.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const <Widget>[
+                    children: <Widget>[
                       CircleAvatar(
-                        radius: 200,
+                        radius: ScreenUtils.screenW(context) / 3,
                         backgroundColor: Colors.white,
-                        backgroundImage: AssetImage('images/tomcat.png'),
+                        // ignore: prefer_interpolation_to_compose_strings
+                        backgroundImage: const AssetImage(Constant.ASSETS_IMG + 'home.png'),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(top: 20.0),
                         child: Text(
                           '落花有意随流水，流水无心恋落花',
@@ -72,6 +72,7 @@ class _SplashWidgetState extends State<SplashWidget> {
                         ),
                         child: CountDownWidget(
                           onCountDownFinishCallBack: (bool value) {
+                            // 倒计时结束以后隐藏广告
                             if (value) {
                               setState(() {
                                 showAd = false;
@@ -87,7 +88,8 @@ class _SplashWidgetState extends State<SplashWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Image.asset(
-                            'images/tomcat.png',
+                            // ignore: prefer_interpolation_to_compose_strings
+                            Constant.ASSETS_IMG + 'ic_launcher.png',
                             width: 50,
                             height: 50,
                           ),
@@ -124,7 +126,7 @@ class CountDownWidget extends StatefulWidget {
 }
 
 class _CountDownWidgetState extends State<CountDownWidget> {
-  var _seconds = 600;
+  var _seconds = 6;
   Timer? _timer;
 
   @override

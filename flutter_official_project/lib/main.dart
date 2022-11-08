@@ -55,6 +55,7 @@ class _RestartWidgetState extends State<RestartWidget> {
     });
   }
 
+  // 此处的 widget 变量是获取当前 state 所属的 StatefulWidget
   @override
   Widget build(BuildContext context) {
     return Container(
