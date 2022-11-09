@@ -18,10 +18,13 @@ class _Item {
 }
 
 class _ContainerPageState extends State<ContainerPage> {
+  // ShopPageWidget 它比较特殊，所以这里把它单拎出来初始化
   final ShopPageWidget shopPageWidget = const ShopPageWidget();
+  // 5 个 tabItem 对应的页面：首页、书影音、小组、市集、我的
   late final List<Widget> pages;
   final defaultItemColor = const Color.fromARGB(255, 125, 125, 125);
 
+  // 5 个 tabItem 的标题、选中图片、非选中图片 
   final itemNames = [
     _Item('首页', 'assets/images/ic_tab_home_active.png', 'assets/images/ic_tab_home_normal.png'),
     _Item('书影音', 'assets/images/ic_tab_subject_active.png', 'assets/images/ic_tab_subject_normal.png'),
@@ -30,6 +33,7 @@ class _ContainerPageState extends State<ContainerPage> {
     _Item('我的', 'assets/images/ic_tab_profile_active.png', 'assets/images/ic_tab_profile_normal.png')
   ];
 
+  // 5 个 tabItem 列表
   late final List<BottomNavigationBarItem> itemList;
 
   @override
@@ -72,6 +76,7 @@ class _ContainerPageState extends State<ContainerPage> {
   @override
   Widget build(BuildContext context) {
     debugPrint('build _ContainerPageState');
+    
     return Scaffold(
       body: Stack(
         children: [
