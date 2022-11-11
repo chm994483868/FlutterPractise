@@ -6,11 +6,17 @@ import 'package:flutter_official_project/pages/splash/splash_widget.dart';
 
 void main() {
   runApp(const MyApp());
-  if (Platform.isAndroid) {
-    // 设置 android 头部的导航栏透明
-    SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  setAndroidOverlayStyle();
+}
+
+/// 仅针对 Android 平台，设置 android 头部的导航栏透明
+void setAndroidOverlayStyle() {
+  if (!Platform.isAndroid) {
+    return;
   }
+
+  SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+  SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
 }
 
 class MyApp extends StatelessWidget {
@@ -18,10 +24,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // RestartWidget 是一个自定义的 Widget，用于控制重启整个应用
     return RestartWidget(
+      // Material 设计风格的 Widget
       child: MaterialApp(
-        theme: ThemeData(backgroundColor: Colors.white),
+        theme: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white)),
         home: const Scaffold(
+          // body 是启动引导页
           body: SplashWidget(),
         ),
       ),

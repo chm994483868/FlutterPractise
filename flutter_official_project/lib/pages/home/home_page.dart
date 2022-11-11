@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,13 +5,26 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      color: Colors.blue,
-      child: const Text(
-        'HomePage',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-      ),
-    );
+    debugPrint('build HomePage');
+
+    return getWidget();
   }
+}
+
+var _tabs = ['动态', '推荐'];
+
+DefaultTabController getWidget() {
+  return DefaultTabController(
+    initialIndex: 1,
+    length: _tabs.length,
+    child: NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return <Widget>[
+          SliverOverlapAbsorber(
+            
+          )
+        ]
+      },
+    ),
+  );
 }
