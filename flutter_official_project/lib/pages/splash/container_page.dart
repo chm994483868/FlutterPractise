@@ -49,7 +49,7 @@ class _ContainerPageState extends State<ContainerPage> {
     debugPrint('initState _ContainerPageState');
 
     // State 的 init 函数中，初始化 pages、itemList 的值
-    pages = [const HomePage(), const BookAudioVideoPage(), const GroupPage(), shopPageWidget, const PersonCenterPage()];
+    pages = [const HomePage(), const BookAudioVideoPage(), const GroupPage(), shopPageWidget, PersonCenterPage()];
 
     // 根据 itemNames List 中的数据初始化 5 个 BottomNavigationBarItem 存放在 itemList List 中
     itemList = itemNames
@@ -61,6 +61,7 @@ class _ContainerPageState extends State<ContainerPage> {
         .toList();
   }
 
+  // 标记当前选中了第几个 BottomNavigationBarItem
   int _selectIndex = 0;
 
   // Stack (层叠布局)+ Offstage 组合，解决状态被重置的问题
@@ -117,7 +118,7 @@ class _ContainerPageState extends State<ContainerPage> {
           });
         },
         // 图标大小
-        iconSize: 25,
+        iconSize: 24,
         // 当前选中的索引
         currentIndex: _selectIndex,
         // 选中后，底部 BottomNavidationBar 内容的颜色（选中时，默认为主题色）（仅当 type: BottomNavidationBarType.fixed 时生效）

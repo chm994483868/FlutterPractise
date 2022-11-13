@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_official_project/constant/constant.dart';
 import 'package:flutter_official_project/pages/splash/container_page.dart';
@@ -14,8 +13,10 @@ class SplashWidget extends StatefulWidget {
 }
 
 class _SplashWidgetState extends State<SplashWidget> {
+  // App 的内容，包含启动后整个 App 的 5 个 Tab 页面
   var container = const ContainerPage();
-  bool showAd = true;
+  // 指示是否显示启动屏广告
+  bool showAd = false;
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +25,19 @@ class _SplashWidgetState extends State<SplashWidget> {
     // 栈 Widget，里面包了两个 Offstage Widget
     return Stack(
       children: <Widget>[
-        // 使用两个 Offstage，一个用于显示 App 的内容，一个是用于显示 5 秒倒计时的启动屏广告
-        // 它们分别使用 showAd 和 !showAd 作为 offstage 的值，即一次只显示其中一个
+        // 使用两个 Offstage，一个用于控制显示 App 的内容，一个用于控制显示 5 秒倒计时的启动屏广告
+        // 它们分别使用 showAd 和 !showAd 作为 offstage 的值，即一次控制显示其中一个
 
-        // 首页
+        // 第一个 Offstage 控制显示首页
         Offstage(
           offstage: showAd,
           child: container,
         ),
-        // 启动屏
+
+        // 第二个 Offstage 控制显示启动屏
         Offstage(
           offstage: !showAd,
-          // Container 包裹启动屏内容，其宽高就是屏幕的宽高
+          // Container 展示启动屏内容，其宽高就是当前屏幕的宽高
           child: Container(
             // 白色
             color: Colors.white,
@@ -89,8 +91,8 @@ class _SplashWidgetState extends State<SplashWidget> {
                       // 然后它的 child 属性放置一个 Container 来包裹倒计时的文字
                       child: Container(
                         // 这里给它一个固定宽高，要不然倒计时数字 -1 变化的过程中文字宽度发生变化，这个小视图会跳动
-                        width: 60,
-                        height: 25,
+                        width: 80,
+                        height: 30,
                         // 扩充右边和顶部与屏幕边缘的距离
                         margin: const EdgeInsets.only(right: 30.0, top: 20.0),
                         // 使 Container 中的 child 居中显示
@@ -99,8 +101,9 @@ class _SplashWidgetState extends State<SplashWidget> {
                         // 给 Container 添加一个圆角带背景色的装饰
                         decoration: const BoxDecoration(
                           // color: Color(0xffEDEDED),
-                          color: Colors.red,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          color: Colors.black26,
+                          // 4 个角切圆角
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
                         // Container 的子 widget 用于显示倒计时的文字
                         child: CountDownWidget(
@@ -185,27 +188,41 @@ class _CountDownWidgetState extends State<CountDownWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // 仅一个 Text Widget 文字居中显示
-    return Text(
-      '$_seconds',
-      style: const TextStyle(fontSize: 17.0),
-      textAlign: TextAlign.center,
+    // 外层添加一个点击手势，点击跳过按钮结束倒计时直接进入首页
+    return GestureDetector(
+      // 启动屏倒计时读秒
+      child: Text(
+        '跳过：$_seconds',
+        style: const TextStyle(fontSize: 12.0, color: Colors.white),
+        textAlign: TextAlign.center,
+      ),
+      // 点击回调
+      onTap: () {
+        // 结束倒计时展示首页
+        _showContainerPage();
+      },
     );
   }
 
   // 启动倒计时的计时器
   void _startTimer() {
-    // 倒计时，1 秒执行一次
+    // 倒计时 1 秒执行一次
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {});
 
       if (_seconds <= 1) {
-        widget.onCountDownFinishCallBack(true);
-        _cancelTimer();
+        // 倒计时结束，展示首页
+        _showContainerPage();
         return;
       }
       _seconds--;
     });
+  }
+
+  // 跳过启动屏倒计时，直接展示首页
+  void _showContainerPage() {
+    widget.onCountDownFinishCallBack(true);
+    _cancelTimer();
   }
 
   // 取消倒计时的计时器
