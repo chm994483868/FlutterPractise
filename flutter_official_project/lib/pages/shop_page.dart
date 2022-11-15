@@ -26,7 +26,8 @@ class ShopPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const WebViewPageWidget();
+    // return const WebViewPageWidget();
+    return const Text('WAITING...');
   }
 }
 

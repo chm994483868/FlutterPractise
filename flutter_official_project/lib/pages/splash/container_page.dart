@@ -49,7 +49,7 @@ class _ContainerPageState extends State<ContainerPage> {
     debugPrint('initState _ContainerPageState');
 
     // State 的 init 函数中，初始化 pages、itemList 的值
-    pages = [const HomePage(), const BookAudioVideoPage(), const GroupPage(), shopPageWidget, PersonCenterPage()];
+    pages = [const HomePage(), const BookAudioVideoPage(), const GroupPage(), shopPageWidget, const PersonCenterPage()];
 
     // 根据 itemNames List 中的数据初始化 5 个 BottomNavigationBarItem 存放在 itemList List 中
     itemList = itemNames

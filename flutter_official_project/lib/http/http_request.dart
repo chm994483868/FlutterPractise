@@ -30,7 +30,9 @@ class HttpRequest {
 
   Future<dynamic> get(String uri, {Map<String, String>? headers}) async {
     try {
-      http.Response response = await http.get(baseUrl + uri, headers: headers);
+      final tempURLString = baseUrl + uri;
+      final tempUri = Uri.parse(tempURLString);
+      http.Response response = await http.get(tempUri, headers: headers);
       final statusCode = response.statusCode;
       final body = response.body;
       debugPrint('[uri=$uri][statusCode=$statusCode][response=$body]');
