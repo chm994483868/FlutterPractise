@@ -1,46 +1,46 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 import 'dart:math' as math;
-import 'package:doubanapp/widgets/my_tab_bar_widget.dart';
-import 'package:doubanapp/widgets/search_text_field_widget.dart';
-import 'package:doubanapp/router.dart';
+
+import 'package:flutter_official_project/widgets/search_text_field_widget.dart';
+// import 'package:doubanapp/widgets/my_tab_bar_widget.dart';
+// import 'package:doubanapp/widgets/search_text_field_widget.dart';
+// import 'package:doubanapp/router.dart';
 
 var titleList = ['电影', '电视', '综艺', '读书', '音乐', '同城'];
 
-List<Widget> tabList;
+List<Widget>? tabList;
 
-///书影音
-///包含了'电影', '电视', '综艺', '读书', '音乐', '同城' item Widget
-///这个Widget是整个项目中，十分复杂的Widget之一
-///
+// 书影音
+// 包含了'电影', '电视', '综艺', '读书', '音乐', '同城' item Widget
+// 这个 Widget 是整个项目中，十分复杂的 Widget 之一
 class BookAudioVideoPage extends StatefulWidget {
+  const BookAudioVideoPage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _BookAudioVideoPageState();
   }
 }
 
-TabController _tabController;
+TabController? _tabController;
 
-class _BookAudioVideoPageState extends State<BookAudioVideoPage>
-    with SingleTickerProviderStateMixin {
+class _BookAudioVideoPageState extends State<BookAudioVideoPage> with SingleTickerProviderStateMixin {
   var tabBar;
 
   @override
   void initState() {
     super.initState();
+
     tabBar = HomePageTabBar();
     tabList = getTabList();
-    _tabController = TabController(vsync: this, length: tabList.length);
+    _tabController = TabController(vsync: this, length: tabList?.length ?? 0);
   }
 
   List<Widget> getTabList() {
-    return titleList
-        .map((item) => Text(
-      '$item',
-      style: TextStyle(fontSize: 15),
-    ))
-        .toList();
+    return titleList.map((item) => Text('$item', style: const TextStyle(fontSize: 15),)).toList();
   }
 
   @override
@@ -48,14 +48,14 @@ class _BookAudioVideoPageState extends State<BookAudioVideoPage>
     return Container(
       color: Colors.white,
       child: SafeArea(
-          child: DefaultTabController(
-              length: titleList.length, child: _getNestedScrollView(tabBar))),
+          child: DefaultTabController(length: titleList.length, child: _getNestedScrollView(tabBar))),
     );
   }
 }
 
 Widget _getNestedScrollView(Widget tabBar) {
   String hintText = '用一部电影来形容你的2018';
+  
   return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
@@ -65,8 +65,9 @@ Widget _getNestedScrollView(Widget tabBar) {
               padding: const EdgeInsets.all(10.0),
               child: SearchTextFieldWidget(
                 hintText: hintText,
-                onTab: () {
-                  MyRouter.push(context, MyRouter.searchPage, hintText);
+                onTap: () {
+                  // 暂时未开放
+                  // MyRouter.push(context, MyRouter.searchPage, hintText);
                 },
               ),
             ),
@@ -89,7 +90,7 @@ Widget _getNestedScrollView(Widget tabBar) {
 }
 
 class HomePageTabBar extends StatefulWidget {
-  HomePageTabBar({Key key}) : super(key: key);
+  const HomePageTabBar({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -98,11 +99,7 @@ class HomePageTabBar extends StatefulWidget {
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  _SliverAppBarDelegate({
-    @required this.minHeight,
-    @required this.maxHeight,
-    @required this.child,
-  });
+  _SliverAppBarDelegate({@required this.minHeight, @required this.maxHeight, @required this.child,});
 
   final double minHeight;
   final double maxHeight;

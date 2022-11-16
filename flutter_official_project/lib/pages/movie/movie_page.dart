@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:doubanapp/pages/movie/title_widget.dart';
-import 'package:doubanapp/pages/movie/today_play_movie_widget.dart';
-import 'package:doubanapp/http/API.dart';
-import 'package:doubanapp/pages/movie/hot_soon_tab_bar.dart';
-import 'package:doubanapp/widgets/item_count_title.dart';
-import 'package:doubanapp/widgets/subject_mark_image_widget.dart';
-import 'package:doubanapp/bean/subject_entity.dart';
-import 'package:doubanapp/bean/top_item_bean.dart';
-import 'package:doubanapp/widgets/rating_bar.dart';
-import 'package:doubanapp/constant/color_constant.dart';
+// import 'package:doubanapp/pages/movie/title_widget.dart';
+// import 'package:doubanapp/pages/movie/today_play_movie_widget.dart';
+// import 'package:doubanapp/http/API.dart';
+// import 'package:doubanapp/pages/movie/hot_soon_tab_bar.dart';
+// import 'package:doubanapp/widgets/item_count_title.dart';
+// import 'package:doubanapp/widgets/subject_mark_image_widget.dart';
+// import 'package:doubanapp/bean/subject_entity.dart';
+// import 'package:doubanapp/bean/top_item_bean.dart';
+// import 'package:doubanapp/widgets/rating_bar.dart';
+// import 'package:doubanapp/constant/color_constant.dart';
 import 'dart:math' as math;
-import 'package:doubanapp/widgets/image/cache_img_radius.dart';
-import 'package:doubanapp/constant/constant.dart';
-import 'package:doubanapp/pages/movie/top_item_widget.dart';
-import 'package:doubanapp/router.dart';
-//import 'package:palette_generator/palette_generator.dart';
-import 'package:flutter/rendering.dart';
-import 'package:doubanapp/repository/movie_repository.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:doubanapp/widgets/loading_widget.dart';
-///书影音-电影
-///这个Widget整个布局较为复杂
-///整个是使用CustomScrollView内存放各种Slivers构成
+// import 'package:doubanapp/widgets/image/cache_img_radius.dart';
+// import 'package:doubanapp/constant/constant.dart';
+// import 'package:doubanapp/pages/movie/top_item_widget.dart';
+// import 'package:doubanapp/router.dart';
+// import 'package:palette_generator/palette_generator.dart';
+// import 'package:flutter/rendering.dart';
+// import 'package:doubanapp/repository/movie_repository.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:doubanapp/widgets/loading_widget.dart';
+
+// 书影音-电影
+// 这个Widget整个布局较为复杂
+// 整个是使用CustomScrollView内存放各种Slivers构成
 class MoviePage extends StatefulWidget {
 
-  MoviePage({Key key}):super(key:key);
+  const MoviePage({super.key});
 
   @override
   State<StatefulWidget> createState() {
