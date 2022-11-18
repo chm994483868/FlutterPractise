@@ -290,7 +290,7 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SubjectMarkImageWidget(
-              comingSoonBean.images.large,
+              comingSoonBean.images?.large,
               width: itemW,
             ),
             Padding(

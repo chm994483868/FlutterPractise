@@ -81,23 +81,19 @@ class DouBanState extends State<DouBanListView> with AutomaticKeepAliveClientMix
   getTitleView(Subject subject) {
 //    var title = subject['title'];
 //    var year = subject['year'];
+    // ignore: avoid_unnecessary_containers
     return Container(
       child: Row(
         children: <Widget>[
-          Icon(
+          const Icon(
             Icons.play_circle_outline,
             color: Colors.redAccent,
           ),
           Text(
             subject.title,
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
           ),
-          Text('(${subject.year})',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey))
+          Text('(${subject.year})', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey))
         ],
       ),
     );
@@ -107,10 +103,10 @@ class DouBanState extends State<DouBanListView> with AutomaticKeepAliveClientMix
 //    var imgUrl = subject['images']['medium'];
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(5.0),
       child: Row(
         children: <Widget>[
-          getImage(subject.images.medium),
+          getImage(subject.images?.medium),
           Expanded(
             child: getMovieInfoView(subject),
             flex: 1,
@@ -120,14 +116,11 @@ class DouBanState extends State<DouBanListView> with AutomaticKeepAliveClientMix
     );
   }
 
-  //圆角图片
+  // 圆角图片
   getImage(var imgUrl) {
     return Container(
-      decoration: BoxDecoration(
-          image:
-              DecorationImage(image: NetworkImage(imgUrl), fit: BoxFit.cover),
-          borderRadius: BorderRadius.all(Radius.circular(5.0))),
-      margin: EdgeInsets.only(left: 8, top: 3, right: 8, bottom: 3),
+      decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(imgUrl), fit: BoxFit.cover), borderRadius: const BorderRadius.all(Radius.circular(5.0))),
+      margin: const EdgeInsets.only(left: 8, top: 3, right: 8, bottom: 3),
       height: itemHeight,
       width: 100.0,
     );
@@ -139,44 +132,38 @@ class DouBanState extends State<DouBanListView> with AutomaticKeepAliveClientMix
     );
   }
 
-  //电影标题，星标评分，演员简介Container
+  // 电影标题，星标评分，演员简介 Container
   getMovieInfoView(Subject subject) {
 //    var start = subject['rating']['average'];
     return Container(
       height: itemHeight,
       alignment: Alignment.topLeft,
       child: Column(
-        children: <Widget>[
-          getTitleView(subject),
-          RatingBar(subject.rating.average),
-          DescWidget(subject)
-        ],
+        children: <Widget>[getTitleView(subject), RatingBar(subject.rating?.average), DescWidget(subject)],
       ),
     );
   }
 
-  //NO.1 图标
+  // NO.1 图标
   numberWidget(var no) {
     return Container(
+      decoration: const BoxDecoration(color: Color.fromARGB(255, 255, 201, 129), borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+      margin: const EdgeInsets.only(left: 12, top: 10),
       child: Text(
         'No.$no',
-        style: TextStyle(color: Color.fromARGB(255, 133, 66, 0)),
+        style: const TextStyle(color: Color.fromARGB(255, 133, 66, 0)),
       ),
-      decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 201, 129),
-          borderRadius: BorderRadius.all(Radius.circular(5.0))),
-      padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
-      margin: EdgeInsets.only(left: 12, top: 10),
     );
   }
 
 //
-//  Flutter中为了节约内存不会保存widget的状态，widget都是临时变量。当我们使用TabBar，TabBarView是我们就会发现，切换tab后再重新切换回上一页面，这时候tab会重新加载重新创建，体验很不友好。Flutter出于自己的设计考虑并没有延续android的ViewPager这样的缓存页面设计，毕竟控件两端都要开发，目前还在beta版本有很多设计还不够完善，但是设计的拓展性没得说，flutter还是为我们提供了解决办法。我们可以强制widget不显示情况下保留状态，下回再加载时就不用重新创建了。
+//  Flutter中为了节约内存不会保存widget的状态，widget都是临时变量。当我们使用 TabBar，TabBarView 是我们就会发现，切换 tab 后再重新切换回上一页面，这时候 tab 会重新加载重新创建，体验很不友好。Flutter 出于自己的设计考虑并没有延续 android 的 ViewPager 这样的缓存页面设计，毕竟控件两端都要开发，目前还在 beta 版本有很多设计还不够完善，但是设计的拓展性没得说，flutter 还是为我们提供了解决办法。我们可以强制 widget 不显示情况下保留状态，下回再加载时就不用重新创建了。
 //
 //  AutomaticKeepAliveClientMixin
 //  AutomaticKeepAliveClientMixin 是一个抽象状态，使用也很简单，我们只需要用我们自己的状态继承这个抽象状态，并实现 wantKeepAlive 方法即可。
 //
-//  继承这个状态后，widget在不显示之后也不会被销毁仍然保存在内存中，所以慎重使用这个方法。
+//  继承这个状态后，widget 在不显示之后也不会被销毁仍然保存在内存中，所以慎重使用这个方法。
 //  ---------------------
 //  作者：唯夜
 //  来源：CSDN
@@ -187,23 +174,24 @@ class DouBanState extends State<DouBanListView> with AutomaticKeepAliveClientMix
   bool get wantKeepAlive => true;
 }
 
-//类别、演员介绍
+// 类别、演员介绍
 class DescWidget extends StatelessWidget {
   final Subject subject;
 
-  DescWidget(this.subject);
+  const DescWidget(this.subject, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    var casts = subject.casts;
+    // 这里用了一个强制取值
+    var casts = subject.casts!;
+
     var sb = StringBuffer();
     var genres = subject.genres;
     for (var i = 0; i < genres.length; i++) {
       sb.write('${genres[i]}  ');
     }
     sb.write("/ ");
-    List<String> list = List.generate(
-        casts.length, (int index) => casts[index].name.toString());
+    List<String> list = List.generate(casts.length, (int index) => casts[index].name.toString());
 
     for (var i = 0; i < list.length; i++) {
       sb.write('${list[i]} ');
@@ -214,24 +202,24 @@ class DescWidget extends StatelessWidget {
         sb.toString(),
         softWrap: true,
         textDirection: TextDirection.ltr,
-        style:
-            TextStyle(fontSize: 16, color: Color.fromARGB(255, 118, 117, 118)),
+        style: const TextStyle(fontSize: 16, color: Color.fromARGB(255, 118, 117, 118)),
       ),
     );
   }
 }
 
 class RatingBar extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final stars;
 
-  RatingBar(this.stars, {Key key}) : super(key: key);
+  const RatingBar(this.stars, {super.key});
 
   @override
   Widget build(BuildContext context) {
     List<Widget> startList = [];
-    //实心星星
+    // 实心星星
     var startNumber = stars ~/ 2;
-    //半实心星星
+    // 半实心星星
     var startHalf = 0;
     if (stars.toString().contains('.')) {
       int tmp = int.parse((stars.toString().split('.')[1]));
@@ -239,36 +227,40 @@ class RatingBar extends StatelessWidget {
         startHalf = 1;
       }
     }
-    //空心星星
+    // 空心星星
     var startEmpty = 5 - startNumber - startHalf;
 
     for (var i = 0; i < startNumber; i++) {
-      startList.add(Icon(
+      startList.add(const Icon(
         Icons.star,
         color: Colors.amberAccent,
         size: 18,
       ));
     }
+
     if (startHalf > 0) {
-      startList.add(Icon(
+      startList.add(const Icon(
         Icons.star_half,
         color: Colors.amberAccent,
         size: 18,
       ));
     }
+
     for (var i = 0; i < startEmpty; i++) {
-      startList.add(Icon(
+      startList.add(const Icon(
         Icons.star_border,
         color: Colors.grey,
         size: 18,
       ));
     }
+
     startList.add(Text(
       '$stars',
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.grey,
       ),
     ));
+
     return Container(
       alignment: Alignment.topLeft,
       padding: const EdgeInsets.only(left: 0, top: 8, right: 0, bottom: 5),
