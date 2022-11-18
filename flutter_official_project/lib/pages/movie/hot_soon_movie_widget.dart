@@ -1,55 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:doubanapp/bean/subject_entity.dart';
-import 'package:doubanapp/widgets/subject_mark_image_widget.dart';
-import '../../constant/constant.dart';
-///影院热映、即将上映
+import 'package:flutter_official_project/bean/subject_entity.dart';
+import 'package:flutter_official_project/constant/constant.dart';
+
+// 影院热映、即将上映
 class HotSoonMovieWidget extends StatefulWidget {
   final state = _HotSoonMovieWidgetState();
 
+  HotSoonMovieWidget({super.key});
+
   @override
-  State<StatefulWidget> createState() {
+  // ignore: library_private_types_in_public_api
+  _HotSoonMovieWidgetState createState() {
+    // ignore: no_logic_in_create_state
     return state;
   }
 
-  ///设置影院热映数据
+  // 设置影院热映数据
   void setHotMovieBeanList(List<Subject> list) {
     state.setHotMovieBeanList(list);
   }
 }
 
-TabController _tabController;
+TabController? _tabController;
 var movieCount = 16;
 
-class _HotSoonMovieWidgetState extends State<HotSoonMovieWidget>
-    with SingleTickerProviderStateMixin {
-  Color selectColor, unselectedColor;
-  TextStyle selectStyle, unselectedStyle;
-  Widget tabBar;
+class _HotSoonMovieWidgetState extends State<HotSoonMovieWidget> with SingleTickerProviderStateMixin {
+  Color? selectColor, unselectedColor;
+  TextStyle? selectStyle, unselectedStyle;
+  Widget? tabBar;
   double childAspectRatio = 355.0 / 506.0;
-  var hotCount, soonCount; //热映数量、即将上映数量、
-  List<Subject> hotMovieBeans, soonMovieBeans;
+  // ignore: prefer_typing_uninitialized_variables
+  var hotCount, soonCount; // 热映数量、即将上映数量、
+  List<Subject>? hotMovieBeans, soonMovieBeans;
 
   @override
   void initState() {
     super.initState();
-    selectColor = Color.fromARGB(255, 45, 45, 45);
-    unselectedColor = Color.fromARGB(255, 135, 135, 135);
-    selectStyle = TextStyle(
-        fontSize: 20, color: selectColor, fontWeight: FontWeight.bold);
+
+    selectColor = const Color.fromARGB(255, 45, 45, 45);
+    unselectedColor = const Color.fromARGB(255, 135, 135, 135);
+    selectStyle = TextStyle(fontSize: 20, color: selectColor, fontWeight: FontWeight.bold);
     unselectedStyle = TextStyle(fontSize: 20, color: unselectedColor);
     _tabController = TabController(vsync: this, length: 2);
-    _tabController.addListener(listener);
+    _tabController?.addListener(listener);
+    
     tabBar = TabBar(
-      tabs: [
+      tabs: const [
         Padding(
-          padding: const EdgeInsets.only(bottom: Constant.TAB_BOTTOM),
+          padding: EdgeInsets.only(bottom: Constant.TAB_BOTTOM),
           child: Text('影院热映'),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: Constant.TAB_BOTTOM),
+          padding: EdgeInsets.only(bottom: Constant.TAB_BOTTOM),
           child: Text('即将上映'),
         )
       ],
+      
       indicatorColor: selectColor,
       labelColor: selectColor,
       labelStyle: selectStyle,
@@ -71,9 +77,10 @@ class _HotSoonMovieWidgetState extends State<HotSoonMovieWidget>
   }
 
   void listener() {
-    if (_tabController.indexIsChanging) {
-      var index = _tabController.index;
-      print("HotSoonMovieWidget index changing=$index");
+    if (_tabController?.indexIsChanging ?? false) {
+      var index = _tabController?.index;
+      debugPrint("HotSoonMovieWidget index changing=$index");
+
       setState(() {
         if (index == 0) {
           movieCount = hotCount;
@@ -91,12 +98,12 @@ class _HotSoonMovieWidgetState extends State<HotSoonMovieWidget>
         Row(
           children: <Widget>[
             Expanded(
-              child: tabBar,
               flex: 1,
+              child: tabBar!,
             ),
             Text(
               '全部 $movieCount > ',
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 12,
                   color: Colors.black,
                   fontWeight: FontWeight.bold),
@@ -119,17 +126,15 @@ class _HotSoonMovieWidgetState extends State<HotSoonMovieWidget>
 
   @override
   void dispose() {
-    _tabController.removeListener(listener);
-    _tabController.dispose();
+    _tabController?.removeListener(listener);
+    _tabController?.dispose();
     super.dispose();
   }
 
   void setHotMovieBeanList(List<Subject> list) {
-    if (list != null) {
-      setState(() {
-        hotMovieBeans = list;
-        hotCount = hotMovieBeans.length;
-      });
-    }
+    setState(() {
+      hotMovieBeans = list;
+      hotCount = hotMovieBeans?.length;
+    });
   }
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
+import 'package:flutter_official_project/widgets/my_tab_bar_widget.dart';
 // import 'package:flutter/rendering.dart';
 import 'dart:math' as math;
 
@@ -34,7 +35,7 @@ class _BookAudioVideoPageState extends State<BookAudioVideoPage> with SingleTick
   void initState() {
     super.initState();
 
-    tabBar = HomePageTabBar();
+    tabBar = const HomePageTabBar();
     tabList = getTabList();
     _tabController = TabController(vsync: this, length: tabList?.length ?? 0);
   }
@@ -85,7 +86,7 @@ Widget _getNestedScrollView(Widget tabBar) {
         ];
       },
       body: FlutterTabBarView(
-        tabController: _tabController,
+        tabController: _tabController!,
       ));
 }
 
@@ -93,13 +94,14 @@ class HomePageTabBar extends StatefulWidget {
   const HomePageTabBar({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  // ignore: library_private_types_in_public_api
+  _HomePageTabBarState createState() {
     return _HomePageTabBarState();
   }
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  _SliverAppBarDelegate({@required this.minHeight, @required this.maxHeight, @required this.child,});
+  _SliverAppBarDelegate({required this.minHeight, required this.maxHeight, required this.child,});
 
   final double minHeight;
   final double maxHeight;
@@ -109,7 +111,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => minHeight;
 
   @override
-  double get maxExtent => math.max((minHeight ?? kToolbarHeight), minExtent);
+  double get maxExtent => math.max((minHeight), minExtent);
 
   @override
   Widget build(
@@ -126,35 +128,35 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class _HomePageTabBarState extends State<HomePageTabBar> {
-  Color selectColor, unselectedColor;
-  TextStyle selectStyle, unselectedStyle;
+  Color? selectColor, unselectedColor;
+  TextStyle? selectStyle, unselectedStyle;
 
   @override
   void initState() {
     super.initState();
     selectColor = Colors.black;
-    unselectedColor = Color.fromARGB(255, 117, 117, 117);
+    unselectedColor = const Color.fromARGB(255, 117, 117, 117);
     selectStyle = TextStyle(fontSize: 18, color: selectColor);
     unselectedStyle = TextStyle(fontSize: 18, color: selectColor);
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    //Tab小部件列表
+    // Tab小部件列表
 //    List<Widget>  @required this.tabs,
-    //组件选中以及动画的状态
+    // 组件选中以及动画的状态
 //   TabController this.controller,
-    //Tab是否可滑动(false->整个tab会把宽度填满，true-> tab包裹)
+    // Tab是否可滑动(false->整个tab会把宽度填满，true-> tab包裹)
 //  bool  this.isScrollable = false,
-    //选项卡下方的导航条的颜色
+    // 选项卡下方的导航条的颜色
 //   Color this.indicatorColor,
-    //选项卡下方的导航条的线条粗细
+    // 选项卡下方的导航条的线条粗细
 //   double this.indicatorWeight = 2.0,
 //  EdgeInsetsGeometry  this.indicatorPadding = EdgeInsets.zero,
 //   Decoration this.indicator,
@@ -167,9 +169,9 @@ class _HomePageTabBarState extends State<HomePageTabBar> {
 //   void Function(T value) this.onTap,按下时的响应事件
 
     return Container(
-      margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: TabBar(
-        tabs: tabList,
+        tabs: tabList!,
         isScrollable: true,
         controller: _tabController,
         indicatorColor: selectColor,

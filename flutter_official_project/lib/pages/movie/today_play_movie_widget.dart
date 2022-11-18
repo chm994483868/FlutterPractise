@@ -1,11 +1,14 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
-import 'package:doubanapp/widgets/image/LaminatedImage.dart';
+import 'package:flutter_official_project/widgets/image/LaminatedImage.dart';
 
 ///今日可播放电影已更新 Widget
 class TodayPlayMovieWidget extends StatelessWidget {
   final urls;
   final backgroundColor;
-  TodayPlayMovieWidget(this.urls, {Key key, this.backgroundColor}) : super(key: key);
+
+  const TodayPlayMovieWidget(this.urls, {super.key, this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +16,9 @@ class TodayPlayMovieWidget extends StatelessWidget {
     if(urls == null || (urls.isEmpty)){
       return Container();
     }
+
     return Stack(
-      alignment: AlignmentDirectional(1.0, 1.0),
+      alignment: const AlignmentDirectional(1.0, 1.0),
       children: <Widget>[
         Stack(
           alignment: AlignmentDirectional.bottomStart,
@@ -23,13 +27,13 @@ class TodayPlayMovieWidget extends StatelessWidget {
               height: 120.0,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: backgroundColor == null ? Color.fromARGB(255, 47, 22, 74) : backgroundColor,
+                  color: backgroundColor ?? const Color.fromARGB(255, 47, 22, 74),
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                  borderRadius: const BorderRadius.all(Radius.circular(4.0))),
             ),
             Container(
               height: 140.0,
-              margin: EdgeInsets.only(left: 13.0, bottom: 14.0),
+              margin: const EdgeInsets.only(left: 13.0, bottom: 14.0),
               child: Row(
                 children: <Widget>[
                   Stack(
@@ -48,11 +52,11 @@ class TodayPlayMovieWidget extends StatelessWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 40.0, left: 20.0),
+                      padding: const EdgeInsets.only(top: 40.0, left: 20.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
+                        children: const <Widget>[
                           Text(
                             '今日可播放电影已更新',
                             style: TextStyle(fontSize: 15, color: Colors.white),
@@ -61,8 +65,7 @@ class TodayPlayMovieWidget extends StatelessWidget {
                             padding: EdgeInsets.only(top: 6.0),
                             child: Text(
                               '全部 30 > ',
-                              style:
-                                  TextStyle(fontSize: 13, color: Colors.white),
+                              style: TextStyle(fontSize: 13, color: Colors.white),
                             ),
                           )
                         ],
@@ -78,14 +81,14 @@ class TodayPlayMovieWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(bottom: 10.0),
+              padding: const EdgeInsets.only(bottom: 10.0),
               child: Image.asset(
                 'assets/images/sofa.png',
                 width: 15.0,
                 height: 15.0,
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(bottom: 10.0, right: 10.0, left: 5.0),
               child: Text(
                 '看电影',

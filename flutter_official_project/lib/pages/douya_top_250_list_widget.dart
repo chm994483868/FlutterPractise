@@ -5,12 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_official_project/bean/subject_entity.dart';
 import 'package:flutter_official_project/http/API.dart';
 
-// import 'package:doubanapp/http/API.dart';
-// import 'package:doubanapp/router.dart';
-// import 'package:doubanapp/bean/subject_entity.dart';
-
 class DouBanListView extends StatefulWidget {
-
   const DouBanListView({super.key});
 
   @override

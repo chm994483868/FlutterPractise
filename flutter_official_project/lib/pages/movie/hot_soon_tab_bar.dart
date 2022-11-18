@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:doubanapp/constant/text_size_constant.dart';
-import 'package:doubanapp/constant/color_constant.dart';
-import '../../constant/constant.dart';
+import 'package:flutter_official_project/constant/color_constant.dart';
+import 'package:flutter_official_project/constant/constant.dart';
+import 'package:flutter_official_project/constant/text_size_constant.dart';
+
 typedef TabCallBack = void Function(int index);
-//影院热映、即将上映 tab
+
+// 影院热映、即将上映 tab
 class HotSoonTabBar extends StatefulWidget {
   final state = _HotSoonTabBarState();
 
-  HotSoonTabBar({Key key, TabCallBack onTabCallBack}) : super(key: key) {
+  HotSoonTabBar({super.key, TabCallBack? onTabCallBack}) {
     state.setTabCallBack(onTabCallBack);
   }
 
   @override
   State<StatefulWidget> createState() {
+    // ignore: no_logic_in_create_state
     return state;
   }
 
@@ -25,42 +28,41 @@ class HotSoonTabBar extends StatefulWidget {
   }
 }
 
-class _HotSoonTabBarState extends State<HotSoonTabBar>
-    with SingleTickerProviderStateMixin {
+class _HotSoonTabBarState extends State<HotSoonTabBar> with SingleTickerProviderStateMixin {
   int movieCount = 0;
-  Color selectColor, unselectedColor;
-  TextStyle selectStyle, unselectedStyle;
-  Widget tabBar;
-  TabController _tabController;
-  var hotCount, soonCount; //热映数量、即将上映数量、
-  TabCallBack onTabCallBack;
+  Color? selectColor, unselectedColor;
+  TextStyle? selectStyle, unselectedStyle;
+  Widget? tabBar;
+  TabController? _tabController;
+  // ignore: prefer_typing_uninitialized_variables
+  var hotCount, soonCount; // 热映数量、即将上映数量、
+  TabCallBack? onTabCallBack;
   int comingSoonCount = 0;
   int selectIndex = 0;
-
-
 
   @override
   void initState() {
     super.initState();
+
     selectColor = ColorConstant.colorDefaultTitle;
-    unselectedColor = Color.fromARGB(255, 135, 135, 135);
-    selectStyle = TextStyle(
-        fontSize: TextSizeConstant.BookAudioPartTabBar,
-        color: selectColor,
-        fontWeight: FontWeight.bold);
-    unselectedStyle = TextStyle(
-        fontSize: TextSizeConstant.BookAudioPartTabBar, color: unselectedColor);
+    unselectedColor = const Color.fromARGB(255, 135, 135, 135);
+    selectStyle = TextStyle(fontSize: TextSizeConstant.BookAudioPartTabBar, color: selectColor, fontWeight: FontWeight.bold);
+    unselectedStyle = TextStyle(fontSize: TextSizeConstant.BookAudioPartTabBar, color: unselectedColor);
     _tabController = TabController(vsync: this, length: 2);
-    _tabController.addListener(listener);
+
+    _tabController?.addListener(listener);
+
     tabBar = TabBar(
-      tabs: [Padding(
-        padding: const EdgeInsets.only(bottom: Constant.TAB_BOTTOM),
-        child: Text('影院热映'),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(bottom: Constant.TAB_BOTTOM),
-        child: Text('即将上映'),
-      )],
+      tabs: const [
+        Padding(
+          padding: EdgeInsets.only(bottom: Constant.TAB_BOTTOM),
+          child: Text('影院热映'),
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: Constant.TAB_BOTTOM),
+          child: Text('即将上映'),
+        )
+      ],
       indicatorColor: selectColor,
       labelColor: selectColor,
       labelStyle: selectStyle,
@@ -85,12 +87,12 @@ class _HotSoonTabBarState extends State<HotSoonTabBar>
     );
   }
 
-
   void listener() {
-    if(_tabController.indexIsChanging){
-      var index = _tabController.index;
-      print("HotSoonTabBar index changing=$index");
-      selectIndex = index;
+    if (_tabController?.indexIsChanging ?? false) {
+      var index = _tabController?.index;
+      debugPrint("HotSoonTabBar index changing=$index");
+
+      selectIndex = index!;
       setState(() {
         if (index == 0) {
           movieCount = hotCount;
@@ -98,18 +100,16 @@ class _HotSoonTabBarState extends State<HotSoonTabBar>
           movieCount = comingSoonCount;
         }
         if (onTabCallBack != null) {
-          onTabCallBack(index);
+          onTabCallBack!(index);
         }
       });
     }
   }
 
-
-
   @override
   void dispose() {
-    _tabController.removeListener(listener);
-    _tabController.dispose();
+    _tabController?.removeListener(listener);
+    _tabController?.dispose();
     super.dispose();
   }
 
@@ -118,22 +118,22 @@ class _HotSoonTabBarState extends State<HotSoonTabBar>
     return Row(
       children: <Widget>[
         Expanded(
-          child: tabBar,
           flex: 1,
+          child: tabBar!,
         ),
         Text(
           '全部 $movieCount > ',
-          style: TextStyle(
-              fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),
         )
       ],
     );
   }
 
-  ///影院热映数量
+  // 影院热映数量
   void setCount(int count) {
     setState(() {
-      this.hotCount = count;
+      hotCount = count;
+
       if (selectIndex == 0) {
         setState(() {
           movieCount = hotCount;
@@ -142,10 +142,11 @@ class _HotSoonTabBarState extends State<HotSoonTabBar>
     });
   }
 
-  ///即将上映数量
+  // 即将上映数量
   void setComingSoonCount(int length) {
     setState(() {
-      this.comingSoonCount = length;
+      comingSoonCount = length;
+
       if (selectIndex == 1) {
         setState(() {
           movieCount = comingSoonCount;
@@ -154,8 +155,7 @@ class _HotSoonTabBarState extends State<HotSoonTabBar>
     });
   }
 
-  void setTabCallBack(TabCallBack onTabCallBack) {
+  void setTabCallBack(TabCallBack? onTabCallBack) {
     this.onTabCallBack = onTabCallBack;
   }
-
 }

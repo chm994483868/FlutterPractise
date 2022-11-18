@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:doubanapp/router.dart';
+// import 'package:doubanapp/router.dart';
 
 typedef TapCallback = void Function();
 
-///《书影业》顶部四个TAB
+//《书影业》顶部四个 TAB
 class TitleWidget extends StatelessWidget {
+  const TitleWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -14,30 +16,34 @@ class TitleWidget extends StatelessWidget {
           '找电影',
           'assets/images/find_movie.png',
           tabCallBack: () {
-            print('点击找电影');
-            MyRouter.push(context, MyRouter.searchPage, '找电影');
+            debugPrint('点击找电影');
+            // 待开放              
+            // MyRouter.push(context, MyRouter.searchPage, '找电影');
           },
         ),
         _TextImgWidget(
           '豆瓣榜单',
           'assets/images/douban_top.png',
           tabCallBack: () {
-            print('点击豆瓣榜单');
-            MyRouter.push(context, MyRouter.searchPage, '豆瓣榜单');
+            debugPrint('点击豆瓣榜单');
+            // 待开放
+            // MyRouter.push(context, MyRouter.searchPage, '豆瓣榜单');
           },
         ),
         _TextImgWidget(
           '豆瓣猜',
           'assets/images/douban_guess.png',
           tabCallBack: () {
-            MyRouter.push(context, MyRouter.searchPage, '豆瓣猜');
+            // 待开放
+            // MyRouter.push(context, MyRouter.searchPage, '豆瓣猜');
           },
         ),
         _TextImgWidget(
           '豆瓣片单',
           'assets/images/douban_film_list.png',
           tabCallBack: () {
-            MyRouter.push(context, MyRouter.searchPage, '豆瓣片单');
+            // 待开放
+            // MyRouter.push(context, MyRouter.searchPage, '豆瓣片单');
           },
         )
       ],
@@ -50,20 +56,13 @@ class _TextImgWidget extends StatelessWidget {
   final String imgAsset;
   final TapCallback tabCallBack;
 
-  _TextImgWidget(
-    this.text,
-    this.imgAsset, {
-    Key key,
-    this.tabCallBack,
-  }) : super(key: key);
+  const _TextImgWidget(this.text, this.imgAsset, {required this.tabCallBack});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (tabCallBack != null) {
-          tabCallBack();
-        }
+        tabCallBack();
       },
       child: Column(
         children: <Widget>[
@@ -74,7 +73,7 @@ class _TextImgWidget extends StatelessWidget {
           ),
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 13,
                 color: Color.fromARGB(
                   255,
