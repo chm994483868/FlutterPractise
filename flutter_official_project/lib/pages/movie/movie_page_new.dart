@@ -118,10 +118,7 @@ class _TodayPlayMovieState extends State<_TodayPlayMovieWidget> {
             Container(
               height: 120.0,
               width: double.infinity,
-              decoration: BoxDecoration(
-                  color: backgroundColor ?? const Color.fromARGB(255, 47, 22, 74),
-                  shape: BoxShape.rectangle,
-                  borderRadius: const BorderRadius.all(Radius.circular(4.0))),
+              decoration: BoxDecoration(color: backgroundColor ?? const Color.fromARGB(255, 47, 22, 74), shape: BoxShape.rectangle, borderRadius: const BorderRadius.all(Radius.circular(4.0))),
             ),
             Container(
               height: 140.0,
@@ -157,8 +154,7 @@ class _TodayPlayMovieState extends State<_TodayPlayMovieWidget> {
                             padding: EdgeInsets.only(top: 6.0),
                             child: Text(
                               '全部 30 > ',
-                              style:
-                                  TextStyle(fontSize: 13, color: Colors.white),
+                              style: TextStyle(fontSize: 13, color: Colors.white),
                             ),
                           )
                         ],
@@ -239,13 +235,9 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
     itemW = (MediaQuery.of(context).size.width - 30.0 - 20.0) / 3;
     hotChildAspectRatio = (377.0 / 674.0);
     comingSoonChildAspectRatio = (377.0 / 742.0);
-    
+
     return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 0.0,
-            childAspectRatio: _getRadio()),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10.0, mainAxisSpacing: 0.0, childAspectRatio: _getRadio()),
         itemBuilder: (BuildContext context, int index) {
           var hotMovieBean;
           var comingSoonBean;
@@ -263,9 +255,7 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
                 offstage: !(selectIndex == 1 && comingSoonBeans.isNotEmpty),
                 child: _getComingSoonItem(comingSoonBean, itemW),
               ),
-              Offstage(
-                  offstage: !(selectIndex == 0 && hotShowBeans.isNotEmpty),
-                  child: _getHotMovieItem(hotMovieBean, itemW))
+              Offstage(offstage: !(selectIndex == 0 && hotShowBeans.isNotEmpty), child: _getHotMovieItem(hotMovieBean, itemW))
             ],
           );
         });
@@ -304,19 +294,14 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
                   softWrap: false,
                   // 多出的文本渐隐方式
                   overflow: TextOverflow.fade,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
             Container(
                 decoration: const ShapeDecoration(
                   color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      side: BorderSide(color: ColorConstant.colorRed277),
-                      borderRadius: BorderRadius.all(Radius.circular(2.0))),
+                  shape: RoundedRectangleBorder(side: BorderSide(color: ColorConstant.colorRed277), borderRadius: BorderRadius.all(Radius.circular(2.0))),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -325,8 +310,7 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
                   ),
                   child: Text(
                     mainland_pubdate,
-                    style: const TextStyle(
-                        fontSize: 8.0, color: ColorConstant.colorRed277),
+                    style: const TextStyle(fontSize: 8.0, color: ColorConstant.colorRed277),
                   ),
                 ))
           ],
@@ -352,11 +336,12 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
         child: Column(
           children: <Widget>[
             SubjectMarkImageWidget(
-              hotMovieBean.images.large,
+              imgNetUrl: hotMovieBean.images!.large,
               width: itemW,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 5.0),
+              // ignore: sized_box_for_whitespace
               child: Container(
                 width: double.infinity,
                 child: Text(
@@ -365,10 +350,7 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
                   softWrap: false,
                   // 多出的文本渐隐方式
                   overflow: TextOverflow.fade,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.bold),
                 ),
               ),
             ),

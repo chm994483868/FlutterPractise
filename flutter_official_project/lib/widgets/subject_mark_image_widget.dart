@@ -17,7 +17,7 @@ class SubjectMarkImageWidget extends StatefulWidget {
   var height;
   final width;
 
-  SubjectMarkImageWidget(this.imgNetUrl, BoolCallback? markAdd, {super.key, this.width = 150.0});
+  SubjectMarkImageWidget({super.key, required this.imgNetUrl, BoolCallback? markAdd, this.width = 150.0});
 
   @override
   // ignore: no_logic_in_create_state
@@ -67,7 +67,7 @@ class _SubjectMarkImageState extends State<SubjectMarkImageWidget> {
         width: width,
         height: height,
         fit: BoxFit.fill,
-        placeholder: (BuildContext context, String url){
+        placeholder: (BuildContext context, String url) {
           return defaultImg;
         },
         fadeInDuration: const Duration(milliseconds: 80),
