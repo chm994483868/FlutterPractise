@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_official_project/constant/constant.dart';
-import 'package:flutter_official_project/pages/splash/container_page.dart';
+import 'package:flutter_official_project/pages/container_page.dart';
 import 'package:flutter_official_project/util/screen_utils.dart';
 
 class SplashWidget extends StatefulWidget {

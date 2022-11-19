@@ -9,7 +9,7 @@ void main() {
   setAndroidOverlayStyle();
 }
 
-/// 仅针对 Android 平台，设置 android 头部的导航栏透明
+// 仅针对 Android 平台，设置 android 头部的导航栏透明
 void setAndroidOverlayStyle() {
   if (!Platform.isAndroid) {
     return;

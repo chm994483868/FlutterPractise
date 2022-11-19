@@ -68,7 +68,7 @@ class LaminatedImage extends StatelessWidget {
     );
   }
 
-  //圆角图片
+  // 圆角图片
   getImage(var imgUrl, var w, var h) {
 //    this.color,
 //    this.elevation = 1.0,

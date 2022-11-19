@@ -6,7 +6,6 @@ typedef OnClick = void Function();
 
 // 左边是豆瓣热门，右边是全部
 class ItemCountTitle extends StatelessWidget {
-//  final state = _ItemCountTitleState();
   // ignore: prefer_typing_uninitialized_variables
   final count;
   final OnClick? onClick;
@@ -14,8 +13,6 @@ class ItemCountTitle extends StatelessWidget {
   final double? fontSize;
 
   const ItemCountTitle({super.key, this.count, this.onClick, required this.title, this.fontSize});
-
-  // const ItemCountTitle(this.title, double? fontSize, OnClick? onClick, {super.key, required this.count});
 
   @override
   Widget build(BuildContext context) {

@@ -11,6 +11,7 @@ import 'package:flutter_official_project/pages/movie/hot_soon_tab_bar.dart';
 import 'package:flutter_official_project/pages/movie/title_widget.dart';
 import 'package:flutter_official_project/pages/movie/today_play_movie_widget.dart';
 import 'package:flutter_official_project/pages/movie/top_item_widget.dart';
+import 'package:flutter_official_project/repository/movie_repository.dart';
 import 'package:flutter_official_project/widgets/image/cache_img_radius.dart';
 import 'package:flutter_official_project/widgets/item_count_title.dart';
 import 'package:flutter_official_project/widgets/loading_widget.dart';
@@ -266,19 +267,19 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
 
   void requestAPI() async {
     Future(() => (repository.requestAPI())).then((value) {
-      hotShowBeans = value.hotShowBeans;
-      comingSoonBeans = value.comingSoonBeans;
-      hotBeans = value.hotBeans;
-      weeklyBeans = value.weeklyBeans;
-      top250Beans = value.top250Beans;
-      todayUrls = value.todayUrls;
+      hotShowBeans = value.hotShowBeans!;
+      comingSoonBeans = value.comingSoonBeans!;
+      hotBeans = value.hotBeans!;
+      weeklyBeans = value.weeklyBeans!;
+      top250Beans = value.top250Beans!;
+      todayUrls = value.todayUrls!;
       weeklyTopBean = value.weeklyTopBean;
       weeklyHotBean = value.weeklyHotBean;
       weeklyTop250Bean = value.weeklyTop250Bean;
       weeklyTopColor = value.weeklyTopColor;
       weeklyHotColor = value.weeklyHotColor;
       weeklyTop250Color = value.weeklyTop250Color;
-      todayPlayBg = value.todayPlayBg;
+      todayPlayBg = value.todayPlayBg!;
       hotSoonTabBar.setCount(hotShowBeans);
       hotSoonTabBar.setComingSoon(comingSoonBeans);
 
