@@ -71,6 +71,7 @@ class _HotSoonTabBarState extends State<HotSoonTabBar> with SingleTickerProvider
       indicatorSize: TabBarIndicatorSize.label,
       controller: _tabController,
       isScrollable: true,
+
 //      onTap: (index) {
 //        selectIndex = index;
 //        setState(() {
@@ -84,6 +85,7 @@ class _HotSoonTabBarState extends State<HotSoonTabBar> with SingleTickerProvider
 //          }
 //        });
 //      },
+
     );
   }
 

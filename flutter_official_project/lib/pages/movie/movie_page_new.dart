@@ -4,37 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_official_project/bean/subject_entity.dart';
 import 'package:flutter_official_project/constant/color_constant.dart';
 import 'package:flutter_official_project/http/API.dart';
-import 'package:flutter_official_project/pages/douya_top_250_list_widget.dart';
 import 'package:flutter_official_project/pages/movie/hot_soon_tab_bar.dart';
 import 'package:flutter_official_project/pages/movie/title_widget.dart';
 import 'package:flutter_official_project/widgets/image/LaminatedImage.dart';
 import 'package:flutter_official_project/widgets/subject_mark_image_widget.dart';
-
-// import 'package:doubanapp/pages/movie/title_widget.dart';
-// import 'package:doubanapp/pages/movie/today_play_movie_widget.dart';
-// import 'package:doubanapp/http/API.dart';
-// import 'package:doubanapp/pages/movie/hot_soon_tab_bar.dart';
-// import 'package:doubanapp/widgets/item_count_title.dart';
-// import 'package:doubanapp/widgets/subject_mark_image_widget.dart';
-// import 'package:doubanapp/bean/subject_entity.dart';
-// import 'package:doubanapp/bean/top_item_bean.dart';
-// import 'package:doubanapp/widgets/rating_bar.dart';
-// import 'package:doubanapp/constant/color_constant.dart';
-// import 'dart:math' as math;
-// import 'package:doubanapp/widgets/image/cache_img_radius.dart';
-// import 'package:doubanapp/constant/constant.dart';
-// import 'package:doubanapp/pages/movie/top_item_widget.dart';
-// import 'package:doubanapp/router.dart';
-// import 'package:doubanapp/http/http_request.dart';
-// import 'package:palette_generator/palette_generator.dart';
-// import 'package:flutter/rendering.dart';
-// import 'package:doubanapp/repository/movie_repository.dart';
-// import 'package:flutter/cupertino.dart';
-// import 'package:doubanapp/widgets/loading_widget.dart';
-// import 'package:doubanapp/widgets/image/LaminatedImage.dart';
-// import 'package:flutter/material.dart';
-// import 'package:doubanapp/constant/text_size_constant.dart';
-// import 'package:doubanapp/constant/color_constant.dart';
+import 'package:flutter_official_project/widgets/rating_bar.dart';
 
 final API _api = API();
 
@@ -89,6 +63,7 @@ class _TodayPlayMovieState extends State<_TodayPlayMovieWidget> {
   @override
   void initState() {
     super.initState();
+
     _api.getTodayPlay((map) {
       debugPrint('_TodayPlayMovieState setState ');
 
@@ -280,8 +255,8 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SubjectMarkImageWidget(
-              comingSoonBean.images?.large,
-              width: itemW,
+              imgNetUrl: comingSoonBean.images!.large,
+              width: itemW
             ),
             Padding(
               padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
@@ -312,7 +287,8 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
                     mainland_pubdate,
                     style: const TextStyle(fontSize: 8.0, color: ColorConstant.colorRed277),
                   ),
-                ))
+                ),
+             )
           ],
         ),
       ),
@@ -356,8 +332,7 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
             ),
             RatingBar(
               hotMovieBean.rating?.average,
-              size: 12.0,
-            )
+            ),
           ],
         ),
       ),
