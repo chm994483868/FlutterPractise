@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_official_project/bean/subject_entity.dart';
 import 'package:flutter_official_project/http/API.dart';
+import 'package:flutter_official_project/router.dart';
 
 class DouBanListView extends StatefulWidget {
   const DouBanListView({super.key});
@@ -70,8 +71,7 @@ class DouBanState extends State<DouBanListView> with AutomaticKeepAliveClientMix
             ),
             onTap: () {
               // 暂时未开放
-              // 监听点击事件
-              // MyRouter.push(context, MyRouter.detailPage, bean.id);
+              MyRouter.push(context, MyRouter.detailPage, bean.id);
             },
           );
         });

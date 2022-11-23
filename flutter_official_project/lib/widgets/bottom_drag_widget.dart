@@ -58,8 +58,8 @@ class _DragContainerState extends State<DragContainer> with TickerProviderStateM
 
   // 滑动位置超过这个位置，会滚到顶部；小于，会滚动底部。
   late double maxOffsetDistance;
-  bool onResetControllerValue = false;
-  late double offsetDistance;
+  bool onResetControllerValue = true;
+  late double offsetDistance = 0;
   late Animation<double> animation;
   bool offstage = false;
   bool _isFling = false;
@@ -225,7 +225,7 @@ class MyVerticalDragGestureRecognizer extends VerticalDragGestureRecognizer {
     _velocityTrackers[event.pointer] = VelocityTracker.withKind(PointerDeviceKind.touch);
   }
 
-  // 来检测是否是fling
+  // 来检测是否是 fling
   @override
   void didStopTrackingLastPointer(int pointer) {
     final double minVelocity = minFlingVelocity ?? kMinFlingVelocity;
@@ -235,7 +235,7 @@ class MyVerticalDragGestureRecognizer extends VerticalDragGestureRecognizer {
     // VelocityEstimate 计算二维速度的
     final VelocityEstimate? estimate = tracker.getVelocityEstimate();
     bool isFling = false;
-    if (estimate != null && estimate.pixelsPerSecond != null) {
+    if (estimate != null) {
       isFling = estimate.pixelsPerSecond.dy.abs() > minVelocity && estimate.offset.dy.abs() > minDistance;
     }
     _velocityTrackers.clear();
@@ -244,8 +244,8 @@ class MyVerticalDragGestureRecognizer extends VerticalDragGestureRecognizer {
       flingListener(isFling);
     }
 
-    ///super.didStopTrackingLastPointer(pointer) 会调用[_handleDragEnd]
-    ///所以将[lingListener(isFling);]放在前一步调用
+    // super.didStopTrackingLastPointer(pointer) 会调用[_handleDragEnd]
+    // 所以将 [lingListener(isFling);] 放在前一步调用
     super.didStopTrackingLastPointer(pointer);
   }
 

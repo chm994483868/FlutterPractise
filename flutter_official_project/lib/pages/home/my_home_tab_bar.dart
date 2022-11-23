@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/util/screen_utils.dart';
 
 const double _kTabHeight = 46.0;
@@ -92,7 +93,8 @@ class _HomeTabBarState extends State<HomeTabBar> {
                     ),
                     // 点击事件
                     onTap: () {
-                      // MyRouter.push(context, MyRouter.searchPage, '搜索流浪地球试一试');
+                      // 暂时未开放
+                      MyRouter.push(context, MyRouter.searchPage, '搜索流浪地球试一试');
                     },
                   ),
                 )

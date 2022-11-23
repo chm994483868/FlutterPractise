@@ -5,6 +5,8 @@ import 'package:flutter_official_project/bean/subject_entity.dart';
 import 'package:flutter_official_project/constant/constant.dart';
 import 'package:flutter_official_project/http/API.dart';
 import 'package:flutter_official_project/http/http_request.dart';
+import 'package:flutter_official_project/http/mock_request.dart';
+import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/image/radius_img.dart';
 import 'package:flutter_official_project/widgets/loading_widget.dart';
 import 'package:flutter_official_project/widgets/search_text_field_widget.dart';
@@ -25,11 +27,12 @@ class GroupPage extends StatelessWidget {
           child: Column(
         children: <Widget>[
           SearchTextFieldWidget(
+            enabled: true,
             margin: const EdgeInsets.all(Constant.MARGIN_RIGHT),
             hintText: hintText,
             onTap: () {
-              // 暂时未开发
-              // MyRouter.push(context, MyRouter.searchPage, hintText);
+              // 暂时未开放
+              MyRouter.push(context, MyRouter.searchPage, hintText);
             },
           ),
           Expanded(
@@ -46,7 +49,8 @@ class _GroupWidget extends StatefulWidget {
   _GroupWidgetState createState() => _GroupWidgetState();
 }
 
-var _request = HttpRequest(API.BASE_URL);
+// var _request = HttpRequest(API.BASE_URL);
+var _request = MockRequest();
 
 class _GroupWidgetState extends State<_GroupWidget> {
   List<Subject>? list;
@@ -149,7 +153,7 @@ class _GroupWidgetState extends State<_GroupWidget> {
       ),
       onTap: () {
         // 暂时未开放
-        // MyRouter.push(context, MyRouter.detailPage, bean.id);
+        MyRouter.push(context, MyRouter.detailPage, bean.id);
       },
     );
   }

@@ -3,31 +3,38 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_official_project/util/screen_utils.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
-String url1 = 'https://flutterchina.club/';
-String url2 = 'http://flutterall.com/';
+// String url1 = 'https://flutterchina.club/';
+// String url2 = 'http://flutterall.com/';
+
+String url1 = 'https://www.qq.com';
+String url2 = 'https://www.baidu.com';
+
 bool _closed = false;
 bool _isShow = true;
 
-/// 提供链接到一个唯一 WebView 的单例实例，以便你可以从应用程序的任何位置控制 webview
+// 提供链接到一个唯一 WebView 的单例实例，以便你可以从应用程序的任何位置控制 webview
 final _webviewReference = FlutterWebviewPlugin();
 
-/// 市集使用两个 webview 代替，因为豆瓣中这个就是 WebView
+// 市集使用两个 webview 代替，因为豆瓣中这个就是 WebView
 class ShopPageWidget extends StatelessWidget {
   const ShopPageWidget({super.key});
 
   void setShowState(bool isShow) {
     _isShow = isShow;
+
     if (!isShow) {
       _closed = true;
       _webviewReference.hide();
-      _webviewReference.close();
+      // _webviewReference.close();
+    } else {
+      _closed = false;
+      _webviewReference.show();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // return const WebViewPageWidget();
-    return const Text('WAITING...');
+    return const WebViewPageWidget();
   }
 }
 
@@ -58,7 +65,6 @@ class _WebViewPageWidgetState extends State<WebViewPageWidget> with SingleTicker
     selectStyle = const TextStyle(fontSize: 18);
     unselectedStyle = const TextStyle(fontSize: 18);
 
-    /// 这个是？
     _webviewReference.onUrlChanged.listen((url) {
       if (url != url1 || url != url2) {
         debugPrint('new Url = $url');
@@ -79,54 +85,55 @@ class _WebViewPageWidgetState extends State<WebViewPageWidget> with SingleTicker
   @override
   Widget build(BuildContext context) {
     if (!_isShow) {
-      return Container();
+      return Container(
+        color: Colors.orange,
+      );
     }
 
     return Container(
       color: Colors.white,
       child: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Container(),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: TabBar(
-                      tabs: list.map((item) => Text(item)).toList(),
-                      isScrollable: false,
-                      controller: tabController,
-                      indicatorColor: selectColor,
-                      labelColor: selectColor,
-                      labelStyle: selectStyle,
-                      unselectedLabelColor: unselectColor,
-                      unselectedLabelStyle: unselectedStyle,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      onTap: (selectIndex) {
-                        debugPrint('select=$selectIndex');
-                        this.selectIndex = selectIndex;
-                        debugPrint('_closed=$_closed');
-
-                        _webviewReference.reloadUrl(selectIndex == 0 ? url1 : url2);
-                      },
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: TabBar(
+                        tabs: list.map((item) => Text(item)).toList(),
+                        isScrollable: false,
+                        controller: tabController,
+                        indicatorColor: selectColor,
+                        labelColor: selectColor,
+                        labelStyle: selectStyle,
+                        unselectedLabelColor: unselectColor,
+                        unselectedLabelStyle: unselectedStyle,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        onTap: (selectIndex) {
+                          debugPrint('select=$selectIndex');
+                          this.selectIndex = selectIndex;
+                          debugPrint('_closed=$_closed');
+                          _webviewReference.reloadUrl(selectIndex == 0 ? url1 : url2);
+                        },
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(),
-                ),
-              ],
-            ),
-            Expanded(
-              child: _WebViewWidget(selectIndex == 0 ? url1 : url2),
-            )
-          ],
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: _WebViewWidget(selectIndex == 0 ? url1 : url2),
+              )
+            ],
         ),
       ),
     );
@@ -149,6 +156,7 @@ class _WebViewWidgetState extends State<_WebViewWidget> {
   @override
   void initState() {
     super.initState();
+
     _webviewReference.close();
   }
 
@@ -170,7 +178,7 @@ class _WebViewWidgetState extends State<_WebViewWidget> {
           if (_rect != value) {
             _rect = value;
           }
-          debugPrint('_webviewReference.launch');
+          debugPrint('🌍🌍🌍 _webviewReference.launch');
           _webviewReference.launch(widget.url, withJavascript: true, withLocalStorage: true, scrollBar: true, rect: getRect());
         } else {
           if (_rect != value) {
@@ -180,6 +188,7 @@ class _WebViewWidgetState extends State<_WebViewWidget> {
         }
       },
       child: const Center(
+        // 环形菊花加载器
         child: CircularProgressIndicator(),
       ),
     );
@@ -189,7 +198,8 @@ class _WebViewWidgetState extends State<_WebViewWidget> {
     if (needFullScreen) {
       return null;
     } else {
-      return Rect.fromLTRB(0.0, ScreenUtils.getStatusBarH(context) + 60.0, ScreenUtils.screenW(context), ScreenUtils.screenH(context) - 60.0);
+      // 这里要注意一下，要根据手机进行适配，如果是 iPhone X 全面屏系列的话，最底部的安全区有 34 的高度要剪掉
+      return Rect.fromLTRB(0.0, ScreenUtils.getStatusBarH(context) + 60.0 + kToolbarHeight, ScreenUtils.screenW(context), ScreenUtils.screenH(context) - 34 - kBottomNavigationBarHeight);
     }
   }
 }
@@ -216,8 +226,8 @@ class _WebviewPlaceholderRender extends RenderProxyBox {
         super(child);
 
   ValueChanged<Rect> _callback;
-  late Rect _rect;
-  Rect get rect => _rect;
+  Rect? _rect;
+  Rect get rect => _rect!;
 
   set onRectChanged(ValueChanged<Rect> callback) {
     if (callback != _callback) {
@@ -227,7 +237,7 @@ class _WebviewPlaceholderRender extends RenderProxyBox {
   }
 
   void notifyRect() {
-    _callback(_rect);
+    _callback(_rect!);
   }
 
   @override

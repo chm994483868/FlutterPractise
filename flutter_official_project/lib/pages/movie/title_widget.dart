@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_official_project/router.dart';
 // import 'package:doubanapp/router.dart';
 
 typedef TapCallback = void Function();
@@ -17,8 +18,8 @@ class TitleWidget extends StatelessWidget {
           'assets/images/find_movie.png',
           tabCallBack: () {
             debugPrint('点击找电影');
-            // 待开放              
-            // MyRouter.push(context, MyRouter.searchPage, '找电影');
+            // 暂时未开放              
+            MyRouter.push(context, MyRouter.searchPage, '找电影');
           },
         ),
         _TextImgWidget(
@@ -26,24 +27,24 @@ class TitleWidget extends StatelessWidget {
           'assets/images/douban_top.png',
           tabCallBack: () {
             debugPrint('点击豆瓣榜单');
-            // 待开放
-            // MyRouter.push(context, MyRouter.searchPage, '豆瓣榜单');
+            // 暂时未开放
+            MyRouter.push(context, MyRouter.searchPage, '豆瓣榜单');
           },
         ),
         _TextImgWidget(
           '豆瓣猜',
           'assets/images/douban_guess.png',
           tabCallBack: () {
-            // 待开放
-            // MyRouter.push(context, MyRouter.searchPage, '豆瓣猜');
+            // 暂时未开放
+            MyRouter.push(context, MyRouter.searchPage, '豆瓣猜');
           },
         ),
         _TextImgWidget(
           '豆瓣片单',
           'assets/images/douban_film_list.png',
           tabCallBack: () {
-            // 待开放
-            // MyRouter.push(context, MyRouter.searchPage, '豆瓣片单');
+            // 暂时未开放
+            MyRouter.push(context, MyRouter.searchPage, '豆瓣片单');
           },
         )
       ],

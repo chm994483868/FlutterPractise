@@ -6,6 +6,7 @@ import 'package:flutter_official_project/constant/color_constant.dart';
 import 'package:flutter_official_project/http/API.dart';
 import 'package:flutter_official_project/pages/movie/hot_soon_tab_bar.dart';
 import 'package:flutter_official_project/pages/movie/title_widget.dart';
+import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/image/LaminatedImage.dart';
 import 'package:flutter_official_project/widgets/subject_mark_image_widget.dart';
 import 'package:flutter_official_project/widgets/rating_bar.dart';
@@ -27,20 +28,25 @@ class MoviePage extends StatelessWidget {
       child: CustomScrollView(
         shrinkWrap: true,
         slivers: <Widget>[
-          // 头部的找电影、豆瓣榜单、etc
+          // 头部的找电影、豆瓣榜单、豆瓣猜、豆瓣片单 4 个按钮
           const SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.only(top: 10.0),
               child: TitleWidget(),
             ),
           ),
+
+          // 一个横向切换的电影海报视图
           SliverToBoxAdapter(
             child: _TodayPlayMovieWidget(),
           ),
+
+          // 影院热映、即将热映 点击切换的 TabBar
           SliverToBoxAdapter(
             child: HotSoonTabBar(),
           ),
-          // 影院热映、即将上映
+
+          // 影院热映、即将上映对应的瀑布流视图
           SliverToBoxAdapter(
             child: __hotComingSoonWidget,
           ),
@@ -65,7 +71,7 @@ class _TodayPlayMovieState extends State<_TodayPlayMovieWidget> {
     super.initState();
 
     _api.getTodayPlay((map) {
-      debugPrint('_TodayPlayMovieState setState ');
+      debugPrint('_TodayPlayMovieState setState');
 
       setState(() {
         urls = map['list'];
@@ -185,9 +191,9 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
   @override
   void initState() {
     super.initState();
+
     _api.getHotComingSoon((map) {
       debugPrint('_HotComingSoonWidgetState setState');
-
       setState(() {
         hotShowBeans = map['hots'];
         comingSoonBeans = map['comingSoons'];
@@ -212,7 +218,10 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
     comingSoonChildAspectRatio = (377.0 / 742.0);
 
     return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10.0, mainAxisSpacing: 0.0, childAspectRatio: _getRadio()),
+        itemCount: selectIndex == 1 ? comingSoonBeans.length : hotShowBeans.length,
         itemBuilder: (BuildContext context, int index) {
           var hotMovieBean;
           var comingSoonBean;
@@ -230,18 +239,18 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
                 offstage: !(selectIndex == 1 && comingSoonBeans.isNotEmpty),
                 child: _getComingSoonItem(comingSoonBean, itemW),
               ),
-              Offstage(offstage: !(selectIndex == 0 && hotShowBeans.isNotEmpty), child: _getHotMovieItem(hotMovieBean, itemW))
+              Offstage(
+                offstage: !(selectIndex == 0 && hotShowBeans.isNotEmpty),
+                child: _getHotMovieItem(hotMovieBean, itemW),
+              ),
             ],
           );
-        });
+        },
+      );
   }
 
   // 即将上映 item
   Widget _getComingSoonItem(Subject comingSoonBean, var itemW) {
-    if (comingSoonBean.casts == null) {
-      return Container();
-    }
-
     // 将 2019-02-14 转成 02 月 14 日
     // ignore: non_constant_identifier_names
     String mainland_pubdate = comingSoonBean.mainland_pubdate;
@@ -254,10 +263,7 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SubjectMarkImageWidget(
-              imgNetUrl: comingSoonBean.images!.large,
-              width: itemW
-            ),
+            SubjectMarkImageWidget(imgNetUrl: comingSoonBean.images!.large, width: itemW),
             Padding(
               padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               // ignore: sized_box_for_whitespace
@@ -274,38 +280,33 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
               ),
             ),
             Container(
-                decoration: const ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(side: BorderSide(color: ColorConstant.colorRed277), borderRadius: BorderRadius.all(Radius.circular(2.0))),
+              decoration: const ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(side: BorderSide(color: ColorConstant.colorRed277), borderRadius: BorderRadius.all(Radius.circular(2.0))),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 5.0,
+                  right: 5.0,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 5.0,
-                    right: 5.0,
-                  ),
-                  child: Text(
-                    mainland_pubdate,
-                    style: const TextStyle(fontSize: 8.0, color: ColorConstant.colorRed277),
-                  ),
+                child: Text(
+                  mainland_pubdate,
+                  style: const TextStyle(fontSize: 8.0, color: ColorConstant.colorRed277),
                 ),
-             )
+              ),
+            )
           ],
         ),
       ),
       onTap: () {
-        // 功能待开放
-        // MyRouter.push(context, MyRouter.detailPage, comingSoonBean.id);
+        // 暂时未开放
+        MyRouter.push(context, MyRouter.detailPage, comingSoonBean.id);
       },
     );
   }
 
   // 影院热映 item
   Widget _getHotMovieItem(Subject hotMovieBean, var itemW) {
-    // ignore: unnecessary_null_comparison
-    if (hotMovieBean == null) {
-      return Container();
-    }
-
     return GestureDetector(
       // ignore: avoid_unnecessary_containers
       child: Container(
@@ -337,8 +338,8 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
         ),
       ),
       onTap: () {
-        // 待开放
-        // MyRouter.push(context, MyRouter.detailPage, hotMovieBean.id);
+        // 暂时未开放
+        MyRouter.push(context, MyRouter.detailPage, hotMovieBean.id);
       },
     );
   }

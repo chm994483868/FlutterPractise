@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_official_project/bean/search_result_entity.dart';
 import 'package:flutter_official_project/http/API.dart';
+import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/search_text_field_widget.dart';
 
 // 搜索
@@ -21,7 +22,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final API _api = API();
 
-  late SearchResultEntity _searchResultEntity;
+  SearchResultEntity? _searchResultEntity;
   var imgW;
   var imgH;
   bool showLoading = false;
@@ -33,8 +34,8 @@ class _SearchPageState extends State<SearchPage> {
       imgH = imgW / 0.75;
     }
 
-    if (_searchResultEntity != null && _searchResultEntity.subjects!.isNotEmpty) {
-      _searchResultEntity.subjects!.sort((a, b) => (b.year!.compareTo(a.year!)));
+    if (_searchResultEntity != null && _searchResultEntity!.subjects!.isNotEmpty) {
+      _searchResultEntity!.subjects!.sort((a, b) => (b.year!.compareTo(a.year!)));
     }
 
     return Scaffold(
@@ -51,20 +52,20 @@ class _SearchPageState extends State<SearchPage> {
                         Expanded(
                           child: ListView.builder(
                             itemBuilder: (BuildContext context, int index) {
-                              SearchResultSubject bean = _searchResultEntity.subjects![index];
+                              SearchResultSubject bean = _searchResultEntity!.subjects![index];
                               return Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.translucent,
                                   child: _getItem(bean, index),
                                   onTap: () {
-                                    // 功能暂时未开放
-                                    // MyRouter.push(context, MyRouter.detailPage, bean.id);
+                                    // 暂时未开放
+                                    MyRouter.push(context, MyRouter.detailPage, bean.id);
                                   },
                                 ),
                               );
                             },
-                            itemCount: _searchResultEntity.subjects!.length,
+                            itemCount: _searchResultEntity!.subjects!.length,
                           ),
                         )
                       ],
@@ -111,6 +112,7 @@ class _SearchPageState extends State<SearchPage> {
         children: <Widget>[
           Expanded(
             child: SearchTextFieldWidget(
+              enabled: true,
               hintText: widget.searchHintContent,
               onSubmitted: (searchContent) {
                 showLoading = true;

@@ -36,7 +36,7 @@ class Subject {
   var alt;
   var id;
 
-  ///构造函数
+  // 构造函数
   Subject.fromMap(Map<String, dynamic> map) {
     var rating = map['rating'];
     this.rating = Rating(rating['average'], rating['max']);

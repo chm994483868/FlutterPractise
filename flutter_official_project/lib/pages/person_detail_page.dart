@@ -1,9 +1,11 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_official_project/bean/celebrity_entity.dart';
 import 'package:flutter_official_project/bean/celebrity_work_entity.dart';
 import 'package:flutter_official_project/repository/person_detail_repository.dart';
+import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/image/radius_img.dart';
 import 'package:flutter_official_project/widgets/item_count_title.dart';
 import 'package:flutter_official_project/widgets/loading_widget.dart';
@@ -32,11 +34,30 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
   double titleSize = 16.0;
   bool loading = true;
 
+  // 记录上一个页面的状态栏颜色
+  SystemUiOverlayStyle? _lastStyle;
+
   @override
   void initState() {
+    // 获取上一个页面的状态栏颜色
+    // ignore: invalid_use_of_visible_for_testing_member
+    _lastStyle = SystemChrome.latestStyle;
+    // 设置当前页面状态栏颜色为白色
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+
     super.initState();
 
     requestAPI();
+  }
+
+  @override
+  void dispose() {
+    // 将状态栏设置为之前的颜色
+    if (_lastStyle != null) {
+      SystemChrome.setSystemUIOverlayStyle(_lastStyle!);
+    }
+
+    super.dispose();
   }
 
   @override
@@ -218,7 +239,7 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
       ),
       onTap: () {
         // 功能待开放
-        // MyRouter.push(context, MyRouter.detailPage, bean.id);
+        MyRouter.push(context, MyRouter.detailPage, bean.id);
       },
     );
   }

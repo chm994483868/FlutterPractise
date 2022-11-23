@@ -33,11 +33,16 @@ class API {
   // 影人条目信息
   static const String CELEBRITY = '/v2/movie/celebrity/';
 
+  // Works（临时加的，仅供读取本地的 json 数据使用）
+  static const String WORKS = '';
+
   static const String REIVIEWS = '/v2/movie/subject/26266893/reviews';
 
   var _request = HttpRequest(API.BASE_URL);
 
   var _mockRequest = MockRequest();
+
+  // var _request = MockRequest();
 
   Future<dynamic> _query(String uri, String value) async {
     final result = await _request.get('$uri$value?apikey=0b2bdeda43b5688921839c8ecb20399b');
@@ -46,14 +51,19 @@ class API {
 
   // 当日可播放电影已经更新
   void getTodayPlay(RequestCallBack requestCallBack) async {
-    int start = math.Random().nextInt(220);
-    final Map result = await _request.get(TOP_250 + '?start=$start&count=4');
+    // int start = math.Random().nextInt(220);
+    // final Map result = await _request.get(TOP_250 + '?start=$start&count=4');
+    
+    // 这里直接用本地的 json 数据
+    var request = MockRequest();
+    var result = await request.get(API.TOP_250);
+
     var resultList = result['subjects'];
     List<Subject> list = resultList.map<Subject>((item) => Subject.fromMap(item)).toList();
     List<String> todayUrls = [];
-    todayUrls.add(list[0].images?.medium);
-    todayUrls.add(list[1].images?.medium);
-    todayUrls.add(list[2].images?.medium);
+    todayUrls.add(list[4].images?.medium);
+    todayUrls.add(list[5].images?.medium);
+    todayUrls.add(list[6].images?.medium);
 
     var paletteGenerator = await PaletteGenerator.fromImageProvider(NetworkImage(list[0].images?.small));
     var todayPlayBg = Color(0x44000000);
@@ -64,7 +74,11 @@ class API {
   }
 
   void top250(RequestCallBack requestCallBack, {count = 250}) async {
-    final Map result = await _request.get(TOP_250 + '?start=0&count=$count&apikey=0b2bdeda43b5688921839c8ecb20399b');
+    // final Map result = await _request.get(TOP_250 + '?start=0&count=$count&apikey=0b2bdeda43b5688921839c8ecb20399b');
+    // 这里修改为从本地 json 中读取数据
+    var request = MockRequest();
+    var result = await request.get(API.TOP_250);
+
     var resultList = result['subjects'];
     List<Subject> list = resultList.map<Subject>((item) => Subject.fromMap(item)).toList();
     requestCallBack(list);
@@ -73,12 +87,22 @@ class API {
   // 影院热映 + 即将上映
   void getHotComingSoon(RequestCallBack requestCallBack) async {
     // 影院热映
-    Map result = await _request.get(IN_THEATERS);
+    // Map result = await _request.get(IN_THEATERS);
+
+    // 这里直接用本地的 json 数据
+    var request = MockRequest();
+    var result = await request.get(API.IN_THEATERS);
+
     var resultList = result['subjects'];
     List<Subject> hots = resultList.map<Subject>((item) => Subject.fromMap(item)).toList();
+    hots.removeAt(1);
+    hots.removeAt(3);
 
     // 即将上映
-    result = await _request.get(COMING_SOON + '?apikey=0b2bdeda43b5688921839c8ecb20399b');
+    // result = await _request.get(COMING_SOON + '?apikey=0b2bdeda43b5688921839c8ecb20399b');
+
+    // 这里直接使用本地的 json 数据
+    result = await request.get(API.COMING_SOON);
     resultList = result['subjects'];
     List<Subject> comingSoons = resultList.map<Subject>((item) => Subject.fromMap(item)).toList();
     requestCallBack({'hots': hots, 'comingSoons': comingSoons});
@@ -141,7 +165,9 @@ class API {
   // 根据关键字搜索 书记 https://api.douban.com/v2/book/search?q=%E6%B5%81%E6%B5%AA&apikey=0b2bdeda43b5688921839c8ecb20399b&start=0&count=10
   // 根据关键字搜索 音乐 https://api.douban.com/v2/music/search?q=%E6%B5%81%E6%B5%AA&apikey=0b2bdeda43b5688921839c8ecb20399b&start=0&count=10
   void searchMovie(String searchContent, RequestCallBack requestCallBack) async {
-    final result = await _request.get('/v2/movie/search?q=$searchContent&apikey=0b2bdeda43b5688921839c8ecb20399b');
+    // 0df993c66c0c636e29ecbb5344252a4a 0b2bdeda43b5688921839c8ecb20399b
+    // 0b2bdeda43b5688921839c8ecb20399b
+    final result = await _request.get('/v2/movie/search?q=$searchContent&apikey=0df993c66c0c636e29ecbb5344252a4a');
     SearchResultEntity bean = SearchResultEntity.fromJson(result);
     requestCallBack(bean);
   }

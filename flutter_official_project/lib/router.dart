@@ -4,6 +4,7 @@ import 'package:flutter_official_project/pages/detail/detail_page.dart';
 import 'package:flutter_official_project/pages/person_detail_page.dart';
 import 'package:flutter_official_project/pages/photo_hero_page.dart';
 import 'package:flutter_official_project/pages/search/search_page.dart';
+import 'package:flutter_official_project/pages/videos_play_page.dart';
 import 'package:flutter_official_project/pages/web_view_page.dart';
 
 // import 'package:flutter/cupertino.dart';
@@ -45,8 +46,8 @@ class MyRouter {
         case homePage:
           return const ContainerPage();
         case playListPage:
-          // return VideoPlayPage(params);
-          return const Text('Placeholder Widget');
+          return VideoPlayPage(params);
+          // return const Text('Placeholder Widget');
         case searchPage:
           return SearchPage(searchHintContent: params);
         case photoHero:

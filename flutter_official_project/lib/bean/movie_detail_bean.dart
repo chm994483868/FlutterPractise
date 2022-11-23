@@ -2,7 +2,7 @@
 
 import 'dart:convert' show json;
 
-///影视条目详情
+// 影视条目详情
 class MovieDetailBean {
   bool? collection;
   String? current_season;

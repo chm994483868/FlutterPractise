@@ -34,6 +34,7 @@ class _HotSoonTabBarState extends State<HotSoonTabBar> with SingleTickerProvider
   TextStyle? selectStyle, unselectedStyle;
   Widget? tabBar;
   TabController? _tabController;
+
   // ignore: prefer_typing_uninitialized_variables
   var hotCount, soonCount; // 热映数量、即将上映数量、
   TabCallBack? onTabCallBack;
@@ -90,17 +91,21 @@ class _HotSoonTabBarState extends State<HotSoonTabBar> with SingleTickerProvider
   }
 
   void listener() {
+    // debugPrint(_tabController.indexIsChanging);
+
     if (_tabController?.indexIsChanging ?? false) {
-      var index = _tabController?.index;
+      var index = _tabController?.index ?? 0;
+
       debugPrint("HotSoonTabBar index changing=$index");
 
-      selectIndex = index!;
+      selectIndex = index;
       setState(() {
         if (index == 0) {
-          movieCount = hotCount;
+          movieCount = hotCount ?? 0;
         } else {
           movieCount = comingSoonCount;
         }
+
         if (onTabCallBack != null) {
           onTabCallBack!(index);
         }

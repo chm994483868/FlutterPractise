@@ -31,6 +31,8 @@ class MockRequest {
     API.TOP_250: 'top250',
     API.WEEKLY: 'weekly',
     API.REIVIEWS: 'reviews',
+    API.CELEBRITY: 'celebrity',
+    API.WORKS: 'works'
   };
 
   getJsonName(String action) {

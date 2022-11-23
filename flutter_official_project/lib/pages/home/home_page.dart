@@ -5,8 +5,10 @@ import 'package:flutter_official_project/bean/subject_entity.dart';
 import 'package:flutter_official_project/constant/constant.dart';
 import 'package:flutter_official_project/http/API.dart';
 import 'package:flutter_official_project/http/mock_request.dart';
+import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/image/radius_img.dart';
 import 'package:flutter_official_project/widgets/search_text_field_widget.dart';
+import 'package:flutter_official_project/widgets/video_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,68 +22,46 @@ class HomePage extends StatelessWidget {
   }
 }
 
-// ignore: unused_element
-var _tabs = ['动态', '推荐'];
+NestedScrollView getWidget() {
+  return NestedScrollView(
+    // 头视图是一个搜索框视图和左右切换 动态 和 推荐 的视图
+    headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+      return <Widget>[
+        SliverOverlapAbsorber(
+          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+          sliver: SliverAppBar(
+            pinned: true,
+            expandedHeight: 44.0,
+            primary: true,
+            titleSpacing: 0.0,
+            backgroundColor: Colors.white,
+            flexibleSpace: FlexibleSpaceBar(
+              collapseMode: CollapseMode.pin,
+              background: Container(
+                color: Colors.white,
+                child: SearchTextFieldWidget(
+                  enabled: false,
+                  hintText: '星际穿越...',
+                  margin: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  onTap: () {
+                    // 暂时未开放
+                    // 输入框被点击
+                    debugPrint('click...');
 
-DefaultTabController getWidget() {
-  return DefaultTabController(
-    // 初始选中 1：推荐的页面
-    initialIndex: 1,
-    // 2 个，分别是动态和推荐
-    length: _tabs.length, // This is the number of tabs.
-    // 子视图是一个嵌套的滚动视图
-    child: NestedScrollView(
-      // 头视图是一个搜索框视图和左右切换 动态 和 推荐 的视图
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return <Widget>[
-          SliverOverlapAbsorber(
-            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            sliver: SliverAppBar(
-              pinned: false,
-              expandedHeight: 120.0,
-              primary: true,
-              titleSpacing: 0.0,
-              backgroundColor: Colors.white,
-              flexibleSpace: FlexibleSpaceBar(
-                collapseMode: CollapseMode.pin,
-                background: Container(
-                  color: Colors.green,
-                  child: SearchTextFieldWidget(
-                    hintText: '影视作品中你难忘的离别',
-                    margin: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    onTap: () {
-                      // 跳转到搜索页面，此功能暂时未开放
-                      // MyRouter.push(context, MyRouter.searchPage, '影视作品中你难忘的离别');
-                    },
-                  ),
-                  // 子 Widget 内容居中显示
-                  alignment: const Alignment(0.0, 0.0),
+                    MyRouter.push(context, MyRouter.searchPage, '影视作品中你难忘的离别');
+                  },
                 ),
-              ),
-              // bottomTextString: _tabs,
-              bottom: TabBar(
-                tabs: _tabs
-                    .map((String name) => Container(
-                          child: Text(
-                            name,
-                          ),
-                          padding: const EdgeInsets.only(bottom: 5.0),
-                        ))
-                    .toList(),
+                // 子 Widget 内容居中显示
+                alignment: const Alignment(0.0, 0.5),
               ),
             ),
           ),
-        ];
-      },
-      // 内容视图
-      body: TabBarView(
-        children: _tabs.map((String name) {
-          // 内容视图，对应了：动态 和 推荐 的内容列表，分别返回两个 SliverContainer Widget
-          return SliverContainer(
-            name: name,
-          );
-        }).toList(),
-      ),
+        ),
+      ];
+    },
+    // 内容视图
+    body: const SliverContainer(
+      name: '',
     ),
   );
 }
@@ -104,12 +84,8 @@ class _SliverContainerState extends State<SliverContainer> {
 
     // 请求动态数据
     if (list == null || list!.isEmpty) {
-      if (_tabs[0] == widget.name) {
-        requestAPI();
-      } else {
-        // 请求推荐数据
-        requestAPI();
-      }
+      // 请求推荐数据
+      requestAPI();
     }
   }
 
@@ -130,19 +106,12 @@ class _SliverContainerState extends State<SliverContainer> {
   }
 
   getContentSliver(BuildContext context, List<Subject>? list) {
-    // 如果是 widget name 是 _tabs[0] 即 动态，则展示登录的 Widget
-    if (widget.name == _tabs[0]) {
-      return _loginContainer(context);
-    }
-
     debugPrint('getContentSliver');
 
     // 如果推荐的 list 无数据，则展示暂无数据
     if (list == null || list.isEmpty) {
       return const Text('暂无数据');
     }
-
-    // 下面则是有数据的情况
 
     // 返回安全区 Widget
     return SafeArea(
@@ -245,7 +214,6 @@ class _SliverContainerState extends State<SliverContainer> {
             // 下面一行三个 Image Widget
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              // 
               children: <Widget>[
                 Image.asset(
                   Constant.ASSETS_IMG + 'ic_vote.png',
@@ -300,14 +268,16 @@ class _SliverContainerState extends State<SliverContainer> {
 
   // 返回一个播放视频的 Widget
   getContentVideo(int index) {
+    // [【Flutter】mounted](https://blog.csdn.net/weixin_39370093/article/details/106815969)
     if (!mounted) {
       return Container();
     }
-    // return VideoWidget(
-    //   index == 1 ? Constant.URL_MP4_DEMO_0 : Constant.URL_MP4_DEMO_1,
-    //   showProgressBar: false,
-    // );
-    return const Text('临时占位的 Text Widget');
+
+    return VideoWidget(
+      url: index == 1 ? Constant.URL_MP4_DEMO_0 : Constant.URL_MP4_DEMO_1,
+      previewImgUrl: index == 1 ? Constant.IMG_TMP1 : Constant.IMG_TMP2,
+      showProgressBar: true,
+    );
   }
 }
 
@@ -357,7 +327,8 @@ _loginContainer(BuildContext context) {
           ),
           // 点击事件暂时未开放
           onTap: () {
-            // MyRouter.push(context, MyRouter.searchPage, '搜索任意东西');
+            // 暂时未开放
+            MyRouter.push(context, MyRouter.searchPage, '搜索任意东西');
           },
         )
       ],

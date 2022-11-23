@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_official_project/pages/douya_top_250_list_widget.dart';
+import 'package:flutter_official_project/pages/movie/movie_page_new.dart';
 
 // import 'package:doubanapp/pages/douya_top_250_list_widget.dart';
 // import 'package:doubanapp/pages/movie/movie_page.dart';
@@ -12,21 +14,21 @@ class FlutterTabBarView extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('build FlutterTabBarView');
 
-    // var viewList = [
-    //   MoviePage(key: const PageStorageKey<String>('MoviePage'),),
-    //   Page2(),
-    //   DouBanListView(key: const PageStorageKey<String>('DouBanListView'),),
-    //   Page4(),
-    //   Page5(),
-    //   Page1(),
-    // ];
+    var viewList = [
+      MoviePage(key: const PageStorageKey<String>('MoviePage'),),
+      const Page2(),
+      const DouBanListView(key: PageStorageKey<String>('DouBanListView'),),
+      const Page4(),
+      const Page5(),
+      const Page1(),
+    ];
 
-    // return TabBarView(
-    //   children: viewList,
-    //   controller: tabController,
-    // );
+    return TabBarView(
+      controller: tabController,
+      children: viewList,
+    );
 
-    return const Text('123');
+    // return const Text('123');
   }
 }
 

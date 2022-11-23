@@ -12,6 +12,7 @@ import 'package:flutter_official_project/pages/movie/title_widget.dart';
 import 'package:flutter_official_project/pages/movie/today_play_movie_widget.dart';
 import 'package:flutter_official_project/pages/movie/top_item_widget.dart';
 import 'package:flutter_official_project/repository/movie_repository.dart';
+import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/image/cache_img_radius.dart';
 import 'package:flutter_official_project/widgets/item_count_title.dart';
 import 'package:flutter_official_project/widgets/loading_widget.dart';
@@ -163,7 +164,7 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
       ),
       onTap: () {
         // 暂时未开放
-        // MyRouter.push(context, MyRouter.detailPage, comingSoonBean.id);
+        MyRouter.push(context, MyRouter.detailPage, comingSoonBean.id);
       },
     );
   }
@@ -209,8 +210,8 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
         ),
       ),
       onTap: () {
-        // 功能待开放
-        // MyRouter.push(context, MyRouter.detailPage, hotMovieBean.id);
+        // 暂时未开放
+        MyRouter.push(context, MyRouter.detailPage, hotMovieBean.id);
       },
     );
   }
@@ -342,8 +343,8 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
                   mainAxisSpacing: 0.0,
                   childAspectRatio: _getRadio())),
           getCommonImg(Constant.IMG_TMP1, (){
-            // 功能待开放
-            // MyRouter.pushNoParams(context, "http://www.flutterall.com");
+            // 暂时未开放
+            MyRouter.pushNoParams(context, "http://www.flutterall.com");
           }),
           SliverToBoxAdapter(
             child: Padding(

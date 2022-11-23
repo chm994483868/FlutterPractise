@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_official_project/constant/cache_key.dart';
 import 'package:flutter_official_project/constant/constant.dart';
+import 'package:flutter_official_project/widgets/image/heart_img_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 typedef VoidCallback = void Function();
@@ -33,10 +34,9 @@ class PersonCenterPage extends StatelessWidget {
           // 在 CustomScrollView 中，每一个独立的，可滚动的 Widget 被称之为 Sliver
           // [Flutter-Slivers](https://www.jianshu.com/p/39dab5c40acb)
           slivers: <Widget>[
-            // slivers 属性是干嘛的？
-            const SliverAppBar(
+            SliverAppBar(
               backgroundColor: Colors.transparent,
-              // flexibleSpace: HeartImgWidget(Image.asset(Constant.ASSETS_IMG + 'bg_person_center_default.webp')),
+              flexibleSpace: HeartImgWidget(img: Image.asset(Constant.ASSETS_IMG + 'bg_person_center_default.webp')),
               // flexibleSpace: Image.asset(Constant.ASSETS_IMG + 'bg_person_center_default.webp'),
               expandedHeight: 200.0,
             ),
@@ -105,7 +105,7 @@ class PersonCenterPage extends StatelessWidget {
             _divider(),
 
             // 书影音数据是否来自网络的开关
-            _dataSelect(),
+            // _dataSelect(),
 
             // 一个高度是 10 颜色是灰色的 SliverToBoxAdapter，作为分隔线使用
             _divider(),

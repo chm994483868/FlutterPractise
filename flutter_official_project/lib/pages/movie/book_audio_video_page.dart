@@ -1,14 +1,10 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
+import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/my_tab_bar_widget.dart';
-// import 'package:flutter/rendering.dart';
 import 'dart:math' as math;
-
 import 'package:flutter_official_project/widgets/search_text_field_widget.dart';
-// import 'package:doubanapp/widgets/my_tab_bar_widget.dart';
-// import 'package:doubanapp/widgets/search_text_field_widget.dart';
-// import 'package:doubanapp/router.dart';
 
 var titleList = ['电影', '电视', '综艺', '读书', '音乐', '同城'];
 
@@ -60,22 +56,26 @@ Widget _getNestedScrollView(Widget tabBar) {
   return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
+          // 这里是顶部的输入框
           SliverToBoxAdapter(
             child: Container(
               color: Colors.white,
               padding: const EdgeInsets.all(10.0),
               child: SearchTextFieldWidget(
+                enabled: true,
                 hintText: hintText,
                 onTap: () {
                   // 暂时未开放
-                  // MyRouter.push(context, MyRouter.searchPage, hintText);
+                  MyRouter.push(context, MyRouter.searchPage, hintText);
                 },
               ),
             ),
           ),
+          // 这里是顶部的：电影、电视、综艺、读书、音乐、同城 横向的 TabBar
           SliverPersistentHeader(
               floating: true,
               pinned: true,
+              // 这里用了一个 _SliverAppBarDelegate 与 TabBar 进行联动，横行滑动时标签跟着切换，点击标签时下面内容自动进行横向滑动
               delegate: _SliverAppBarDelegate(
                   maxHeight: 49.0,
                   minHeight: 49.0,
@@ -85,6 +85,7 @@ Widget _getNestedScrollView(Widget tabBar) {
                   )))
         ];
       },
+      // 下面是各个 TabBar 对应的内容 _tabController
       body: FlutterTabBarView(
         tabController: _tabController!,
       ));

@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_official_project/bean/comments_entity.dart';
 import 'package:flutter_official_project/bean/movie_detail_bean.dart';
 import 'package:flutter_official_project/bean/movie_long_comments_entity.dart';
@@ -13,34 +14,12 @@ import 'package:flutter_official_project/http/mock_request.dart';
 import 'package:flutter_official_project/pages/detail/detail_title_widget.dart';
 import 'package:flutter_official_project/pages/detail/long_comment_widget.dart';
 import 'package:flutter_official_project/pages/detail/score_start.dart';
+import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/animal_photo.dart';
+import 'package:flutter_official_project/widgets/bottom_drag_widget.dart';
 import 'package:flutter_official_project/widgets/rating_bar.dart';
-
-// import 'package:doubanapp/http/API.dart';
-// import 'package:doubanapp/bean/movie_detail_bean.dart';
-// import 'package:doubanapp/pages/detail/detail_title_widget.dart';
-// import 'package:doubanapp/util/pick_img_main_color.dart';
-// import 'package:doubanapp/constant/constant.dart';
-// import 'package:doubanapp/pages/detail/score_start.dart';
-// import 'package:doubanapp/pages/detail/look_confirm_button.dart';
 import 'dart:math' as math;
-//import 'package:doubanapp/widgets/image/cached_network_image.dart';
-// import 'package:doubanapp/router.dart';
-// import 'package:doubanapp/widgets/item_count_title.dart';
-// import 'package:doubanapp/bean/comments_entity.dart';
-// import 'package:doubanapp/widgets/rating_bar.dart';
-// import 'package:doubanapp/pages/photo_hero_page.dart';
-// import 'package:doubanapp/widgets/animal_photo.dart';
-//import 'package:palette_generator/palette_generator.dart';
-// import 'package:flutter/rendering.dart';
-// import 'package:flutter/material.dart';
-// import 'package:doubanapp/http/http_request.dart';
-// import 'package:doubanapp/http/mock_request.dart';
-// import 'package:doubanapp/widgets/loading_widget.dart';
 import 'package:palette_generator/palette_generator.dart';
-// import '../../bean/movie_long_comments_entity.dart';
-// import '../../widgets/bottom_drag_widget.dart';
-// import 'long_comment_widget.dart';
 
 // 影片、电视详情页面
 class DetailPage extends StatefulWidget {
@@ -56,7 +35,8 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   final subjectId;
-  Color pickColor = const Color(0xffffffff); // 默认主题色
+  // Color pickColor = const Color(0xffffffff); // 默认主题色
+  Color pickColor = Colors.black;
   CommentsEntity? commentsEntity;
   MovieLongCommentsEntity? movieLongCommentReviews;
   bool loading = true;
@@ -69,11 +49,29 @@ class _DetailPageState extends State<DetailPage> {
 
   double get screenH => MediaQuery.of(context).size.height;
 
+  // 记录上一个页面的状态栏颜色
+  SystemUiOverlayStyle? _lastStyle;
+
   @override
   void initState() {
+    // 获取上一个页面的状态栏颜色
+    // ignore: invalid_use_of_visible_for_testing_member
+    _lastStyle = SystemChrome.latestStyle;
+    // 设置当前页面状态栏颜色为白色
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
     super.initState();
 
     requestAPI();
+  }
+
+  @override
+  void dispose() {
+    // 将状态栏设置为之前的颜色
+    if (_lastStyle != null) {
+      SystemChrome.setSystemUIOverlayStyle(_lastStyle!);
+    }
+    super.dispose();
   }
 
   @override
@@ -94,10 +92,10 @@ class _DetailPageState extends State<DetailPage> {
                 body: _getBody(),
                 dragContainer: DragContainer(
                     drawer: Container(
+                      decoration: const BoxDecoration(color: Color.fromARGB(255, 243, 244, 248), borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0))),
                       child: OverscrollNotificationWidget(
                         child: LongCommentWidget(movieLongCommentsEntity: movieLongCommentReviews!),
                       ),
-                      decoration: const BoxDecoration(color: Color.fromARGB(255, 243, 244, 248), borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0))),
                     ),
                     defaultShowHeight: screenH * 0.1,
                     height: screenH * 0.8))),
@@ -248,7 +246,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
             onTap: () {
               // 功能待开放
-              // MyRouter.push(context, MyRouter.personDetailPage, {'personImgUrl': imgUrl, 'id': id});
+              MyRouter.push(context, MyRouter.personDetailPage, {'personImgUrl': imgUrl, 'id': id});
             },
           ),
         ));
@@ -319,7 +317,7 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                     onTap: () {
                       // 功能待开放
-                      // MyRouter.push(context, MyRouter.playListPage, _movieDetailBean.trailers);
+                      MyRouter.push(context, MyRouter.playListPage, _movieDetailBean?.trailers);
                     },
                   );
                 } else {
@@ -371,6 +369,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 Text(
                   '全部短评 ${commentsEntity!.total!} >',
+                  // ignore: use_full_hex_values_for_flutter_colors
                   style: const TextStyle(color: Color(0x88fffffff), fontSize: 12.0),
                 )
               ],
@@ -390,6 +389,7 @@ class _DetailPageState extends State<DetailPage> {
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
+                // ignore: use_full_hex_values_for_flutter_colors
                 Icon(Icons.keyboard_arrow_right, size: 20.0, color: Color(0x88fffffff))
               ],
             ),
@@ -462,7 +462,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
             onTap: () {
               // 功能待开放
-              // MyRouter.push(context, bean.author.alt, {'title': '个人主页'});
+              MyRouter.push(context, bean.author!.alt!, {'title': '个人主页'});
             },
           );
         }
@@ -514,7 +514,8 @@ class _DetailPageState extends State<DetailPage> {
       return PaletteGenerator.fromImageProvider(NetworkImage(_movieDetailBean!.images!.large!));
     }).then((paletteGenerator) {
       if (paletteGenerator.colors.isNotEmpty) {
-        pickColor = paletteGenerator.colors.toList()[0];
+        // pickColor = paletteGenerator.colors.toList()[0];
+        pickColor = Colors.black;
       }
       // return _request.get(
       // '/v2/movie/subject/$subjectId/comments?apikey=0b2bdeda43b5688921839c8ecb20399b');
