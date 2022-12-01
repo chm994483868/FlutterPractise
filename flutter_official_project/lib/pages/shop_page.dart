@@ -59,6 +59,7 @@ class _WebViewPageWidgetState extends State<WebViewPageWidget> with SingleTicker
     debugPrint('_ShopPageWidgetState initState');
 
     _webviewReference.close();
+
     tabController = TabController(length: list.length, vsync: this);
     selectColor = Colors.green;
     unselectColor = const Color.fromARGB(255, 117, 117, 117);
@@ -93,47 +94,50 @@ class _WebViewPageWidgetState extends State<WebViewPageWidget> with SingleTicker
     return Container(
       color: Colors.white,
       child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Container(),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: TabBar(
-                        tabs: list.map((item) => Text(item)).toList(),
-                        isScrollable: false,
-                        controller: tabController,
-                        indicatorColor: selectColor,
-                        labelColor: selectColor,
-                        labelStyle: selectStyle,
-                        unselectedLabelColor: unselectColor,
-                        unselectedLabelStyle: unselectedStyle,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        onTap: (selectIndex) {
-                          debugPrint('select=$selectIndex');
-                          this.selectIndex = selectIndex;
-                          debugPrint('_closed=$_closed');
-                          _webviewReference.reloadUrl(selectIndex == 0 ? url1 : url2);
-                        },
-                      ),
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Container(),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: TabBar(
+                      tabs: list.map((item) => Text(item)).toList(),
+                      isScrollable: false,
+                      controller: tabController,
+                      indicatorColor: selectColor,
+                      labelColor: selectColor,
+                      labelStyle: selectStyle,
+                      unselectedLabelColor: unselectColor,
+                      unselectedLabelStyle: unselectedStyle,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      onTap: (selectIndex) {
+                        debugPrint('select=$selectIndex');
+                        this.selectIndex = selectIndex;
+                        debugPrint('_closed=$_closed');
+                        _webviewReference.reloadUrl(selectIndex == 0 ? url1 : url2);
+                      },
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: _WebViewWidget(selectIndex == 0 ? url1 : url2),
-              )
-            ],
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(),
+                ),
+              ],
+            ),
+            Expanded(
+              child: _WebViewWidget(selectIndex == 0 ? url1 : url2),
+              // child: Container(
+              //   color: Colors.red,
+              // ),
+            )
+          ],
         ),
       ),
     );
@@ -168,6 +172,21 @@ class _WebViewWidgetState extends State<_WebViewWidget> {
     _webviewReference.dispose();
   }
 
+  // @override
+  // void didUpdateWidget(covariant _WebViewWidget oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+
+  //   RenderBox? renderBox = context.findRenderObject() as RenderBox;
+  //   double left = 0;
+  //   double top = renderBox.localToGlobal(Offset.zero).dy;
+  //   double width = renderBox.size.width;
+  //   double height = ScreenUtils.screenH(context) - top - kBottomNavigationBarHeight - 34;
+
+  //   double safeBottom = ScreenUtils().bottomBarHeight;
+
+  //   debugPrint('🌍🌍🌍 didUpdateWidget: ${renderBox.size} ${renderBox.localToGlobal(Offset.zero)} ${ScreenUtils.screenH(context)} $kBottomNavigationBarHeight $height $safeBottom');
+  // }
+
   @override
   Widget build(BuildContext context) {
     debugPrint('build widget.url=${widget.url}');
@@ -178,8 +197,26 @@ class _WebViewWidgetState extends State<_WebViewWidget> {
           if (_rect != value) {
             _rect = value;
           }
-          debugPrint('🌍🌍🌍 _webviewReference.launch');
-          _webviewReference.launch(widget.url, withJavascript: true, withLocalStorage: true, scrollBar: true, rect: getRect());
+
+          RenderBox? renderBox = context.findRenderObject() as RenderBox;
+          double left = 0;
+          double top = renderBox.localToGlobal(Offset.zero).dy;
+          double width = renderBox.size.width;
+
+          // 这里 34 是针对苹果刘海屏系列，底部安全区高度是 34
+          double height = ScreenUtils.screenH(context) - top - kBottomNavigationBarHeight - 34;
+
+          MediaQueryData mq = MediaQuery.of(context);
+          double safeBottom = mq.padding.bottom;
+
+          // double safeBottom = ScreenUtils().bottomBarHeight;
+
+          debugPrint('🌍🌍🌍 _webviewReference.launch ${renderBox.size} ${renderBox.localToGlobal(Offset.zero)} ${ScreenUtils.screenH(context)} $kBottomNavigationBarHeight $height $safeBottom');
+
+          Rect rect = Rect.fromLTWH(left, top, width, height);
+
+          // _webviewReference.launch(widget.url, withJavascript: true, withLocalStorage: true, scrollBar: true, rect: getRect());
+          _webviewReference.launch(widget.url, withJavascript: true, withLocalStorage: true, scrollBar: true, rect: rect);
         } else {
           if (_rect != value) {
             _rect = value;
@@ -199,7 +236,10 @@ class _WebViewWidgetState extends State<_WebViewWidget> {
       return null;
     } else {
       // 这里要注意一下，要根据手机进行适配，如果是 iPhone X 全面屏系列的话，最底部的安全区有 34 的高度要剪掉
-      return Rect.fromLTRB(0.0, ScreenUtils.getStatusBarH(context) + 60.0 + kToolbarHeight, ScreenUtils.screenW(context), ScreenUtils.screenH(context) - 34 - kBottomNavigationBarHeight);
+      double tempValue = ScreenUtils.getStatusBarH(context);
+      debugPrint('高度打印：$tempValue');
+
+      return Rect.fromLTRB(0.0, ScreenUtils.getStatusBarH(context) + kToolbarHeight, ScreenUtils.screenW(context), ScreenUtils.screenH(context) - 34 - kBottomNavigationBarHeight);
     }
   }
 }
@@ -226,8 +266,8 @@ class _WebviewPlaceholderRender extends RenderProxyBox {
         super(child);
 
   ValueChanged<Rect> _callback;
-  Rect? _rect;
-  Rect get rect => _rect!;
+  Rect _rect = Rect.zero;
+  Rect get rect => _rect;
 
   set onRectChanged(ValueChanged<Rect> callback) {
     if (callback != _callback) {
@@ -237,7 +277,7 @@ class _WebviewPlaceholderRender extends RenderProxyBox {
   }
 
   void notifyRect() {
-    _callback(_rect!);
+    _callback(_rect);
   }
 
   @override

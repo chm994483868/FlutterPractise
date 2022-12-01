@@ -8,6 +8,7 @@ class PersonDetailRepository {
   CelebrityEntity? celebrityEntity;
   CelebrityWorkEntity? celebrityWorkEntity;
 
+  // ignore: unused_field
   final HttpRequest _httpRequest = HttpRequest(API.BASE_URL);
   final MockRequest _mockRequest = MockRequest();
   

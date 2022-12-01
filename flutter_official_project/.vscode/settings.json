@@ -1,4 +1,6 @@
 {
     "dart.lineLength": 500,
-    "dart.lspSnippetTextEdits": true
+    "dart.lspSnippetTextEdits": true,
+    "dart.previewFlutterOutline": true,
+    "dart.openDevTools": "always"
 }

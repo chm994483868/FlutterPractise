@@ -41,7 +41,7 @@ NestedScrollView getWidget() {
                 color: Colors.white,
                 child: SearchTextFieldWidget(
                   enabled: false,
-                  hintText: '星际穿越...',
+                  hintText: '请输入你想要了解的影片...',
                   margin: const EdgeInsets.only(left: 15.0, right: 15.0),
                   onTap: () {
                     // 暂时未开放
@@ -335,3 +335,17 @@ _loginContainer(BuildContext context) {
     ),
   );
 }
+
+
+// [{
+// 	"resource": "/Users/hmc/Documents/GitHub/GitHub_Sourcetree/SSH/FlutterPractise/flutter_official_project/android",
+// 	"owner": "_generated_diagnostic_collection_name_#4",
+// 	"code": "0",
+// 	"severity": 8,
+// 	"message": "The supplied phased action failed with an exception.\nCould not create task ':generateLockfiles'.\nA problem occurred starting process 'command '/Users/hmc/Documents/GitHub/GitHub_Sourcetree/SSH/FlutterPractise/flutter_official_project/android/gradlew''\nCould not start '/Users/hmc/Documents/GitHub/GitHub_Sourcetree/SSH/FlutterPractise/flutter_official_project/android/gradlew'\nCannot run program \"/Users/hmc/Documents/GitHub/GitHub_Sourcetree/SSH/FlutterPractise/flutter_official_project/android/gradlew\" (in directory \"/Users/hmc/Documents/GitHub/GitHub_Sourcetree/SSH/FlutterPractise/flutter_official_project/android\"): error=2, No such file or directory\nerror=2, No such file or directory",
+// 	"source": "Java",
+// 	"startLineNumber": 1,
+// 	"startColumn": 1,
+// 	"endLineNumber": 1,
+// 	"endColumn": 1
+// }]

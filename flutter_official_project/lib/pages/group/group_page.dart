@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_official_project/bean/subject_entity.dart';
 import 'package:flutter_official_project/constant/constant.dart';
 import 'package:flutter_official_project/http/API.dart';
+// ignore: unused_import
 import 'package:flutter_official_project/http/http_request.dart';
 import 'package:flutter_official_project/http/mock_request.dart';
 import 'package:flutter_official_project/router.dart';

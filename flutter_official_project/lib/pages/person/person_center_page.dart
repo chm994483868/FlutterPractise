@@ -179,6 +179,7 @@ class PersonCenterPage extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   _dataSelect() {
     return const UseNetDataWidget();
   }
