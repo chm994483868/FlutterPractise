@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_official_project/pages/douya_top_250_list_widget.dart';
 import 'package:flutter_official_project/pages/movie/movie_page_new.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 // import 'package:doubanapp/pages/douya_top_250_list_widget.dart';
 // import 'package:doubanapp/pages/movie/movie_page.dart';
@@ -12,7 +13,7 @@ class FlutterTabBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build FlutterTabBarView');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     var viewList = [
       MoviePage(key: const PageStorageKey<String>('MoviePage'),),
@@ -37,7 +38,7 @@ class Page1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build Page1');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     return const Center(
       child: Text('Page1'),
@@ -50,7 +51,7 @@ class Page2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build Page2');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     return const Center(
       child: Text('Page2'),
@@ -63,7 +64,7 @@ class Page3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build Page3');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     return const Center(
       child: Text('Page3'),
@@ -76,7 +77,7 @@ class Page4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build Page4');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     return const Center(
       child: Text('Page4'),
@@ -89,7 +90,7 @@ class Page5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build Page5');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     return const Center(
       child: Text('Page5'),

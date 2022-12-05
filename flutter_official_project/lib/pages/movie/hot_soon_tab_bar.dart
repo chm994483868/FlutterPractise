@@ -91,8 +91,6 @@ class _HotSoonTabBarState extends State<HotSoonTabBar> with SingleTickerProvider
   }
 
   void listener() {
-    // debugPrint(_tabController.indexIsChanging);
-
     if (_tabController?.indexIsChanging ?? false) {
       var index = _tabController?.index ?? 0;
 

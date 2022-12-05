@@ -18,6 +18,7 @@ import 'package:flutter_official_project/widgets/item_count_title.dart';
 import 'package:flutter_official_project/widgets/loading_widget.dart';
 import 'package:flutter_official_project/widgets/rating_bar.dart';
 import 'package:flutter_official_project/widgets/subject_mark_image_widget.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 // 书影音-电影
 // 这个 Widget 整个布局较为复杂
@@ -53,7 +54,7 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
   @override
   void initState() {
     super.initState();
-    debugPrint('initState movie_page');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     titleWidget = const Padding(
       padding: EdgeInsets.only(top: 10.0),
@@ -78,7 +79,7 @@ class _MoviePageState extends State<MoviePage>  with AutomaticKeepAliveClientMix
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build movie_page');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     if (itemW == null || imgSize <= 0) {
       MediaQuery.of(context);

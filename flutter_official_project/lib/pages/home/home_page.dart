@@ -9,13 +9,14 @@ import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/image/radius_img.dart';
 import 'package:flutter_official_project/widgets/search_text_field_widget.dart';
 import 'package:flutter_official_project/widgets/video_widget.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build HomePage');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     // 首页的 Widget，返回一个 DefaultTabController，左右两边分别展示 动态 和 推荐 的内容
     return getWidget();
@@ -44,11 +45,8 @@ NestedScrollView getWidget() {
                   hintText: '请输入你想要了解的影片...',
                   margin: const EdgeInsets.only(left: 15.0, right: 15.0),
                   onTap: () {
-                    // 暂时未开放
-                    // 输入框被点击
-                    debugPrint('click...');
-
-                    MyRouter.push(context, MyRouter.searchPage, '影视作品中你难忘的离别');
+                    // 这里关闭了输入框的交互响应，所以这里点击输入框后直接跳转到 SearchPage 搜索页面去
+                    MyRouter.push(context, MyRouter.searchPage, '我是传递到搜索页面中的参数');
                   },
                 ),
                 // 子 Widget 内容居中显示
@@ -60,17 +58,12 @@ NestedScrollView getWidget() {
       ];
     },
     // 内容视图
-    body: const SliverContainer(
-      name: '',
-    ),
+    body: const SliverContainer(),
   );
 }
 
 class SliverContainer extends StatefulWidget {
-  // 这里根据传递的 name 来判断当前是 动态 还是 推荐 Widget
-  final String name;
-
-  const SliverContainer({super.key, required this.name});
+  const SliverContainer({super.key});
 
   @override
   _SliverContainerState createState() => _SliverContainerState();
@@ -80,7 +73,7 @@ class _SliverContainerState extends State<SliverContainer> {
   @override
   void initState() {
     super.initState();
-    debugPrint('init state${widget.name}');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     // 请求动态数据
     if (list == null || list!.isEmpty) {
@@ -106,7 +99,7 @@ class _SliverContainerState extends State<SliverContainer> {
   }
 
   getContentSliver(BuildContext context, List<Subject>? list) {
-    debugPrint('getContentSliver');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     // 如果推荐的 list 无数据，则展示暂无数据
     if (list == null || list.isEmpty) {
@@ -122,13 +115,10 @@ class _SliverContainerState extends State<SliverContainer> {
         builder: (BuildContext context) {
           // 自定义滚动 View
           return CustomScrollView(
-            // 物理效果
+            // 滑动视图采用从边缘反弹的滚动物理效果，即 iOS 中默认的果冻回弹效果
             physics: const BouncingScrollPhysics(),
-            // key
-            key: PageStorageKey<String>(widget.name),
             // sliver
             slivers: <Widget>[
-              // 这里是什么呀？
               SliverOverlapInjector(
                 handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               ),
@@ -280,72 +270,3 @@ class _SliverContainerState extends State<SliverContainer> {
     );
   }
 }
-
-// 动态 TAB
-// ignore: unused_element
-_loginContainer(BuildContext context) {
-  // 返回一个 Align Widget
-  return Align(
-    // 居中
-    alignment: const Alignment(0.0, 0.0),
-    // 子 Widget 是一个 Column Widget
-    child: Column(
-      // 居中
-      mainAxisAlignment: MainAxisAlignment.center,
-      // 放在列中的子 Widget
-      children: <Widget>[
-        // 最上面是一个提示登录的默认图片 Image Widget
-        Image.asset(
-          // ignore: prefer_interpolation_to_compose_strings
-          Constant.ASSETS_IMG + 'ic_new_empty_view_default.png',
-          width: 120.0,
-        ),
-        // 一个提示文字的 Text Widget
-        const Padding(
-          padding: EdgeInsets.only(top: 15.0, bottom: 25.0),
-          child: Text(
-            '登录后查看关注人动态',
-            style: TextStyle(fontSize: 16.0, color: Colors.grey),
-          ),
-        ),
-        // 可以点击的 Widget
-        GestureDetector(
-          // 子 Widget 是一个 Container 容器 Widget
-          child: Container(
-            // 内边距，左右距离为 35 上下距离为 8
-            padding: const EdgeInsets.only(left: 35.0, right: 35.0, top: 8.0, bottom: 8.0),
-            // 装饰
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.green),
-              borderRadius: const BorderRadius.all(Radius.circular(6.0)),
-            ),
-            // 子 Widget 是 Text Widget
-            child: const Text(
-              '去登录',
-              style: TextStyle(fontSize: 16.0, color: Colors.green),
-            ),
-          ),
-          // 点击事件暂时未开放
-          onTap: () {
-            // 暂时未开放
-            MyRouter.push(context, MyRouter.searchPage, '搜索任意东西');
-          },
-        )
-      ],
-    ),
-  );
-}
-
-
-// [{
-// 	"resource": "/Users/hmc/Documents/GitHub/GitHub_Sourcetree/SSH/FlutterPractise/flutter_official_project/android",
-// 	"owner": "_generated_diagnostic_collection_name_#4",
-// 	"code": "0",
-// 	"severity": 8,
-// 	"message": "The supplied phased action failed with an exception.\nCould not create task ':generateLockfiles'.\nA problem occurred starting process 'command '/Users/hmc/Documents/GitHub/GitHub_Sourcetree/SSH/FlutterPractise/flutter_official_project/android/gradlew''\nCould not start '/Users/hmc/Documents/GitHub/GitHub_Sourcetree/SSH/FlutterPractise/flutter_official_project/android/gradlew'\nCannot run program \"/Users/hmc/Documents/GitHub/GitHub_Sourcetree/SSH/FlutterPractise/flutter_official_project/android/gradlew\" (in directory \"/Users/hmc/Documents/GitHub/GitHub_Sourcetree/SSH/FlutterPractise/flutter_official_project/android\"): error=2, No such file or directory\nerror=2, No such file or directory",
-// 	"source": "Java",
-// 	"startLineNumber": 1,
-// 	"startColumn": 1,
-// 	"endLineNumber": 1,
-// 	"endColumn": 1
-// }]

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_official_project/util/screen_utils.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 // String url1 = 'https://flutterchina.club/';
 // String url2 = 'http://flutterall.com/';
@@ -34,6 +35,8 @@ class ShopPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
+    
     return const WebViewPageWidget();
   }
 }
@@ -56,7 +59,7 @@ class _WebViewPageWidgetState extends State<WebViewPageWidget> with SingleTicker
   @override
   void initState() {
     super.initState();
-    debugPrint('_ShopPageWidgetState initState');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     _webviewReference.close();
 
@@ -76,7 +79,7 @@ class _WebViewPageWidgetState extends State<WebViewPageWidget> with SingleTicker
   @override
   void dispose() {
     super.dispose();
-    debugPrint('_ShopPageWidgetState dispose');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     tabController.dispose();
     _webviewReference.close();
@@ -171,21 +174,6 @@ class _WebViewWidgetState extends State<_WebViewWidget> {
     _webviewReference.close();
     _webviewReference.dispose();
   }
-
-  // @override
-  // void didUpdateWidget(covariant _WebViewWidget oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-
-  //   RenderBox? renderBox = context.findRenderObject() as RenderBox;
-  //   double left = 0;
-  //   double top = renderBox.localToGlobal(Offset.zero).dy;
-  //   double width = renderBox.size.width;
-  //   double height = ScreenUtils.screenH(context) - top - kBottomNavigationBarHeight - 34;
-
-  //   double safeBottom = ScreenUtils().bottomBarHeight;
-
-  //   debugPrint('🌍🌍🌍 didUpdateWidget: ${renderBox.size} ${renderBox.localToGlobal(Offset.zero)} ${ScreenUtils.screenH(context)} $kBottomNavigationBarHeight $height $safeBottom');
-  // }
 
   @override
   Widget build(BuildContext context) {

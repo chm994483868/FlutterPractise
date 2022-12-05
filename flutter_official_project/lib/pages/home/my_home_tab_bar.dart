@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/util/screen_utils.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 const double _kTabHeight = 46.0;
 const double _kTextAndIconTabHeight = 42.0;
@@ -17,6 +18,7 @@ class HomeTabBar extends StatefulWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize {
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
     debugPrint('preferredSize');
 
     for (Widget item in tabBar.tabs) {

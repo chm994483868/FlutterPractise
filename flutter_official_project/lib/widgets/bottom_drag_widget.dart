@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 // 上拉抽屉
 class BottomDragWidget extends StatelessWidget {
@@ -316,7 +317,7 @@ class OverscrollNotificationWidgetState extends State<OverscrollNotificationWidg
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('NotificationListener build');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     final Widget child = NotificationListener<ScrollStartNotification>(
       key: _key,

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_official_project/bean/subject_entity.dart';
 import 'package:flutter_official_project/http/API.dart';
 import 'package:flutter_official_project/router.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 class DouBanListView extends StatefulWidget {
   const DouBanListView({super.key});
@@ -33,7 +34,7 @@ class DouBanState extends State<DouBanListView> with AutomaticKeepAliveClientMix
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build douban_250');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     return Container(
       child: getListViewContainer(),

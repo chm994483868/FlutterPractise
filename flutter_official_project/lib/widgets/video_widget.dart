@@ -59,7 +59,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   void initState() {
     super.initState();
 
-    debugPrint('播放${widget.url}');
+    debugPrint('🐑🐑🐑 视频播放的 URL: ${widget.url}');
 
     // 初始化 _controller
     _controller = VideoPlayerController.network(widget.url)

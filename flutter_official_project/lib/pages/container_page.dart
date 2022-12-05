@@ -4,6 +4,7 @@ import 'package:flutter_official_project/pages/home/home_page.dart';
 import 'package:flutter_official_project/pages/movie/book_audio_video_page.dart';
 import 'package:flutter_official_project/pages/person/person_center_page.dart';
 import 'package:flutter_official_project/pages/shop_page.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 // 首页的 Widget
 class ContainerPage extends StatefulWidget {
@@ -46,7 +47,7 @@ class _ContainerPageState extends State<ContainerPage> {
   @override
   void initState() {
     super.initState();
-    debugPrint('initState _ContainerPageState');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     // State 的 init 函数中，初始化 pages、itemList 的值
     pages = [const HomePage(), const BookAudioVideoPage(), const GroupPage(), shopPageWidget, const PersonCenterPage()];
@@ -61,7 +62,7 @@ class _ContainerPageState extends State<ContainerPage> {
         .toList();
   }
 
-  // 标记当前选中了第几个 BottomNavigationBarItem
+  // 标记当前选中了第几个 BottomNavigationBarItem，默认选中 HomePage
   int _selectIndex = 0;
 
   // Stack (层叠布局)+ Offstage 组合，解决状态被重置的问题
@@ -85,12 +86,13 @@ class _ContainerPageState extends State<ContainerPage> {
   @override
   void didUpdateWidget(covariant ContainerPage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    debugPrint('didUpdateWidget');
+
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build _ContainerPageState');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     return Scaffold(
       // 栈 Widget 中是 5 个页面

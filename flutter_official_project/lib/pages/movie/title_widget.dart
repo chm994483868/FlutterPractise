@@ -17,8 +17,7 @@ class TitleWidget extends StatelessWidget {
           '找电影',
           'assets/images/find_movie.png',
           tabCallBack: () {
-            debugPrint('点击找电影');
-            // 暂时未开放              
+            debugPrint('点击找电影');              
             MyRouter.push(context, MyRouter.searchPage, '找电影');
           },
         ),
@@ -27,7 +26,6 @@ class TitleWidget extends StatelessWidget {
           'assets/images/douban_top.png',
           tabCallBack: () {
             debugPrint('点击豆瓣榜单');
-            // 暂时未开放
             MyRouter.push(context, MyRouter.searchPage, '豆瓣榜单');
           },
         ),
@@ -35,7 +33,6 @@ class TitleWidget extends StatelessWidget {
           '豆瓣猜',
           'assets/images/douban_guess.png',
           tabCallBack: () {
-            // 暂时未开放
             MyRouter.push(context, MyRouter.searchPage, '豆瓣猜');
           },
         ),
@@ -43,7 +40,6 @@ class TitleWidget extends StatelessWidget {
           '豆瓣片单',
           'assets/images/douban_film_list.png',
           tabCallBack: () {
-            // 暂时未开放
             MyRouter.push(context, MyRouter.searchPage, '豆瓣片单');
           },
         )

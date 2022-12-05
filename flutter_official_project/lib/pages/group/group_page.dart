@@ -11,6 +11,7 @@ import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/image/radius_img.dart';
 import 'package:flutter_official_project/widgets/loading_widget.dart';
 import 'package:flutter_official_project/widgets/search_text_field_widget.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 // 小组
 class GroupPage extends StatelessWidget {
@@ -18,6 +19,8 @@ class GroupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
+    
     String hintText = '搜索书影音 小组 日记 用户等';
 
     // return const Text('GROUP WAITING...');

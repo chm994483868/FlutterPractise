@@ -6,6 +6,7 @@ import 'package:flutter_official_project/constant/cache_key.dart';
 import 'package:flutter_official_project/constant/constant.dart';
 import 'package:flutter_official_project/widgets/image/heart_img_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 typedef VoidCallback = void Function();
 
@@ -15,7 +16,7 @@ class PersonCenterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build PersonCenterPage');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     return Scaffold(
       // 白色背景

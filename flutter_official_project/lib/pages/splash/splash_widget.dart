@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_official_project/constant/constant.dart';
 import 'package:flutter_official_project/pages/container_page.dart';
 import 'package:flutter_official_project/util/screen_utils.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 class SplashWidget extends StatefulWidget {
   const SplashWidget({super.key});
@@ -16,17 +17,24 @@ class _SplashWidgetState extends State<SplashWidget> {
   // App 的内容，包含启动后整个 App 的 5 个 Tab 页面
   var container = const ContainerPage();
   // 指示是否显示启动屏广告
-  bool showAd = false;
+  bool showAd = true;
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
+  }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build splash');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     // 栈 Widget，里面包了两个 Offstage Widget
     return Stack(
       children: <Widget>[
-        // 使用两个 Offstage，一个用于控制显示 App 的内容，一个用于控制显示 5 秒倒计时的启动屏广告
-        // 它们分别使用 showAd 和 !showAd 作为 offstage 的值，即一次控制显示其中一个
+        // 使用两个 Offstage，一个用于显示 App 的内容，一个用于显示 5 秒倒计时的启动屏广告
+        // 它们分别使用 showAd 和 !showAd 作为 offstage 的值，即一次仅显示其中一个
 
         // 第一个 Offstage 控制显示首页
         Offstage(

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_official_project/pages/splash/splash_widget.dart';
+import 'package:flutter_official_project/pages/splash/root_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white)),
         home: const Scaffold(
-          // body 是启动引导页
-          body: SplashWidget(),
+          // body: SplashWidget(),
+          body: RootWidget(),
         ),
       ),
     );
@@ -41,9 +41,7 @@ class MyApp extends StatelessWidget {
 class RestartWidget extends StatefulWidget {
   final Widget? child;
 
-  const RestartWidget({Key? key, required this.child})
-      : assert(child != null),
-        super(key: key);
+  const RestartWidget({super.key, required this.child}) : assert(child != null);
 
   static restartApp(BuildContext context) {
     final _RestartWidgetState state = context.findAncestorStateOfType<_RestartWidgetState>()!;

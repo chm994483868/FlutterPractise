@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_official_project/bean/movie_long_comments_entity.dart';
 import 'package:flutter_official_project/constant/constant.dart';
 import 'package:flutter_official_project/widgets/rating_bar.dart';
-
-// import '../../bean/movie_long_comments_entity.dart';
-// import '../../widgets/rating_bar.dart';
-// import '../../constant/constant.dart';
-// import 'package:doubanapp/router.dart';
-
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 // 电影长评论

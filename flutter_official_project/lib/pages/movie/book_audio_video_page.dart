@@ -5,6 +5,7 @@ import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/my_tab_bar_widget.dart';
 import 'dart:math' as math;
 import 'package:flutter_official_project/widgets/search_text_field_widget.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 var titleList = ['电影', '电视', '综艺', '读书', '音乐', '同城'];
 
@@ -42,6 +43,8 @@ class _BookAudioVideoPageState extends State<BookAudioVideoPage> with SingleTick
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
+    
     return Container(
       color: Colors.white,
       child: SafeArea(

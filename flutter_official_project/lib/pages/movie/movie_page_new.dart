@@ -10,6 +10,7 @@ import 'package:flutter_official_project/router.dart';
 import 'package:flutter_official_project/widgets/image/LaminatedImage.dart';
 import 'package:flutter_official_project/widgets/subject_mark_image_widget.dart';
 import 'package:flutter_official_project/widgets/rating_bar.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 final API _api = API();
 
@@ -21,7 +22,7 @@ class MoviePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('MoviePage build');
+    debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
 
     return Padding(
       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
