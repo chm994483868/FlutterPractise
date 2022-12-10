@@ -245,7 +245,6 @@ class _DetailPageState extends State<DetailPage> {
               ],
             ),
             onTap: () {
-              // 功能待开放
               MyRouter.push(context, MyRouter.personDetailPage, {'personImgUrl': imgUrl, 'id': id});
             },
           ),
@@ -316,7 +315,6 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                     ),
                     onTap: () {
-                      // 功能待开放
                       MyRouter.push(context, MyRouter.playListPage, _movieDetailBean?.trailers);
                     },
                   );

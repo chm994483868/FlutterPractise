@@ -300,7 +300,6 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
         ),
       ),
       onTap: () {
-        // 暂时未开放
         MyRouter.push(context, MyRouter.detailPage, comingSoonBean.id);
       },
     );
@@ -339,7 +338,6 @@ class _HotComingSoonWidgetState extends State<_HotComingSoonWidget> {
         ),
       ),
       onTap: () {
-        // 暂时未开放
         MyRouter.push(context, MyRouter.detailPage, hotMovieBean.id);
       },
     );

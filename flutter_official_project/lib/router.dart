@@ -26,7 +26,6 @@ class MyRouter {
           return const ContainerPage();
         case playListPage:
           return VideoPlayPage(params);
-          // return const Text('Placeholder Widget');
         case searchPage:
           return SearchPage(searchHintContent: params);
         case photoHero:
@@ -38,13 +37,6 @@ class MyRouter {
     // return null;
     return const Text('Placeholder Widget');
   }
-
-//
-//  void push(BuildContext context, String url, dynamic params) {
-//    Navigator.push(context, MaterialPageRoute(builder: (context) {
-//      return _getPage(url, params);
-//    }));
-//  }
 
   MyRouter.pushNoParams(BuildContext context, String url) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {

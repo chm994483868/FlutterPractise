@@ -6,6 +6,7 @@ import 'package:flutter_official_project/constant/constant.dart';
 import 'package:flutter_official_project/util/screen_utils.dart';
 
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 // import 'package:flutter_official_project/widgets/video_progress_bar.dart';
 
 // http://vt1.doubanio.com/201902111139/0c06a85c600b915d8c9cbdbbaf06ba9f/view/movie/M/302420330.mp4
@@ -65,6 +66,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     _controller = VideoPlayerController.network(widget.url)
       ..initialize().then((_) {
         if (mounted) {
+          // 确保在初始化视频后显示第一帧，甚至在按下播放按钮之前
           setState(() {});
 
           // 这里是视频跳转到开头
@@ -92,9 +94,20 @@ class _VideoWidgetState extends State<VideoWidget> {
       // 子 Widget
       GestureDetector(
         // 视频播放的 Widget
-        child: VideoPlayer(_controller),
+        // child: VideoPlayer(_controller),
+        child: VisibilityDetector(
+            key: Key(widget.url),
+            child: VideoPlayer(_controller),
+            onVisibilityChanged: (visibilityInfo) {
+              var visiblePercentage = visibilityInfo.visibleFraction * 100;
+              debugPrint('🥥🥥🥥 VisibilityDetector 打印: Widget ${visibilityInfo.key} is $visiblePercentage% visible');
+
+              if (visiblePercentage < 100 && _controller.value.isPlaying) {
+                _controller.pause();
+              }
+            }),
         onTap: () {
-          // 点击隐藏或者显示视频跳转操作条
+          // 点击隐藏或者显示视频暂停播放按钮以及视频进度条
           setState(() {
             _showSeekBar = !_showSeekBar;
           });

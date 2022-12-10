@@ -38,43 +38,46 @@ class _BookAudioVideoPageState extends State<BookAudioVideoPage> with SingleTick
   }
 
   List<Widget> getTabList() {
-    return titleList.map((item) => Text('$item', style: const TextStyle(fontSize: 15),)).toList();
+    return titleList
+        .map((item) => Text(
+              '$item',
+              style: const TextStyle(fontSize: 15),
+            ))
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
     debugPrint('🐑🐑🐑 ${Trace.current().frames[0].member}');
-    
+
     return Container(
       color: Colors.white,
-      child: SafeArea(
-          child: DefaultTabController(length: titleList.length, child: _getNestedScrollView(tabBar))),
+      child: SafeArea(child: DefaultTabController(length: titleList.length, child: _getNestedScrollView(tabBar))),
     );
   }
 }
 
 Widget _getNestedScrollView(Widget tabBar) {
   String hintText = '用一部电影来形容你的2018';
-  
+
   return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
-          // 这里是顶部的输入框
+          // 这里是顶部的输入框的 sliver，它会随向上滑动屏幕而滑出屏幕
           SliverToBoxAdapter(
             child: Container(
               color: Colors.white,
               padding: const EdgeInsets.all(10.0),
               child: SearchTextFieldWidget(
-                enabled: true,
+                enabled: false,
                 hintText: hintText,
                 onTap: () {
-                  // 暂时未开放
                   MyRouter.push(context, MyRouter.searchPage, hintText);
                 },
               ),
             ),
           ),
-          // 这里是顶部的：电影、电视、综艺、读书、音乐、同城 横向的 TabBar
+          // 这里是顶部的：电影、电视、综艺、读书、音乐、同城 横向的 TabBar 的 sliver，它会随着向上滑动屏幕而固定在屏幕顶部
           SliverPersistentHeader(
               floating: true,
               pinned: true,
@@ -88,7 +91,7 @@ Widget _getNestedScrollView(Widget tabBar) {
                   )))
         ];
       },
-      // 下面是各个 TabBar 对应的内容 _tabController
+      // 下面是 TabBar 对应的内容 _tabController
       body: FlutterTabBarView(
         tabController: _tabController!,
       ));
@@ -105,7 +108,11 @@ class HomePageTabBar extends StatefulWidget {
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  _SliverAppBarDelegate({required this.minHeight, required this.maxHeight, required this.child,});
+  _SliverAppBarDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+  });
 
   final double minHeight;
   final double maxHeight;
@@ -118,16 +125,13 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => math.max((minHeight), minExtent);
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return child;
   }
 
   @override
   bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
+    return maxHeight != oldDelegate.maxHeight || minHeight != oldDelegate.minHeight || child != oldDelegate.child;
   }
 }
 
@@ -152,26 +156,6 @@ class _HomePageTabBarState extends State<HomePageTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    // Tab小部件列表
-//    List<Widget>  @required this.tabs,
-    // 组件选中以及动画的状态
-//   TabController this.controller,
-    // Tab是否可滑动(false->整个tab会把宽度填满，true-> tab包裹)
-//  bool  this.isScrollable = false,
-    // 选项卡下方的导航条的颜色
-//   Color this.indicatorColor,
-    // 选项卡下方的导航条的线条粗细
-//   double this.indicatorWeight = 2.0,
-//  EdgeInsetsGeometry  this.indicatorPadding = EdgeInsets.zero,
-//   Decoration this.indicator,
-//   TabBarIndicatorSize this.indicatorSize,导航条的长度，（tab：默认等分；label：跟标签长度一致）
-//  Color  this.labelColor,所选标签标签的颜色
-//  TextStyle  this.labelStyle,所选标签标签的文本样式
-//  EdgeInsetsGeometry  this.labelPadding,,所选标签标签的内边距
-// Color   this.unselectedLabelColor,未选定标签标签的颜色
-//  TextStyle  this.unselectedLabelStyle,未选中标签标签的文字样式
-//   void Function(T value) this.onTap,按下时的响应事件
-
     return Container(
       margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: TabBar(

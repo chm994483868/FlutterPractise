@@ -35,7 +35,6 @@ class GroupPage extends StatelessWidget {
             margin: const EdgeInsets.all(Constant.MARGIN_RIGHT),
             hintText: hintText,
             onTap: () {
-              // 暂时未开放
               MyRouter.push(context, MyRouter.searchPage, hintText);
             },
           ),
@@ -64,7 +63,6 @@ class _GroupWidgetState extends State<_GroupWidget> {
   void initState() {
     super.initState();
     
-    // 请求正在热映的数据
     Future(() {
       return _request.get(API.IN_THEATERS);
     }).then((result) {
@@ -156,7 +154,6 @@ class _GroupWidgetState extends State<_GroupWidget> {
         ],
       ),
       onTap: () {
-        // 暂时未开放
         MyRouter.push(context, MyRouter.detailPage, bean.id);
       },
     );

@@ -59,7 +59,6 @@ class _SearchPageState extends State<SearchPage> {
                                   behavior: HitTestBehavior.translucent,
                                   child: _getItem(bean, index),
                                   onTap: () {
-                                    // 暂时未开放
                                     MyRouter.push(context, MyRouter.detailPage, bean.id);
                                   },
                                 ),

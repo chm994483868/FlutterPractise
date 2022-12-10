@@ -46,6 +46,8 @@ dependencies:
   cached_network_image: ^3.2.2
   shared_preferences: ^2.0.15
   stack_trace: ^1.9.3
+  visibility_detector: ^0.3.3
+  provider: ^6.0.4
 
 dev_dependencies:
   flutter_test:
